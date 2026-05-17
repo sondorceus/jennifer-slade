@@ -186,9 +186,16 @@ export default function Home() {
           autoPlay muted loop playsInline preload="auto"
           poster=""
         />
-        {/* Dark cinematic vignette over the video for headline contrast */}
-        <div className="absolute inset-0 z-[2] bg-gradient-to-b from-[#0f0c0a]/35 via-[#0f0c0a]/15 to-[#0f0c0a]/70" />
-        <div className="absolute inset-0 z-[2] bg-[radial-gradient(ellipse_70%_60%_at_50%_50%,transparent_30%,rgba(0,0,0,0.45)_100%)]" />
+        {/* Contrast scrim — pushes the bright sunshine in the video
+            down so the headline reads cleanly. Three-layer recipe:
+            (a) vertical gradient — heaviest top and bottom for the
+                hero typography + CTAs respectively
+            (b) left-anchored radial — darker where the text block
+                sits, lighter where the portrait is on the right
+            (c) classic edge vignette */}
+        <div className="absolute inset-0 z-[2] bg-gradient-to-b from-[#0f0c0a]/65 via-[#0f0c0a]/30 to-[#0f0c0a]/80" />
+        <div className="absolute inset-0 z-[2] bg-[radial-gradient(ellipse_60%_85%_at_18%_55%,rgba(15,12,10,0.65),transparent_70%)]" />
+        <div className="absolute inset-0 z-[2] bg-[radial-gradient(ellipse_75%_65%_at_50%_50%,transparent_25%,rgba(0,0,0,0.55)_100%)]" />
         {/* Jennifer's portrait positioned right side on desktop — uses
             a top-fade + side-fade mask so the white background of the
             photo blends seamlessly into the dark cinematic hero. The
@@ -208,12 +215,23 @@ export default function Home() {
         />
         <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 pt-32 lg:pt-44 pb-20 min-h-[92svh] flex flex-col justify-between z-10">
           <div className="max-w-2xl lg:max-w-3xl">
-            <p className="font-serif italic text-xs tracking-[0.28em] uppercase text-[#c9a877] mb-8">Westlake · Tarrytown · Lakeway</p>
-            <h1 className="display text-[#faf6f0] text-[14vw] sm:text-[10vw] lg:text-[7.5vw] xl:text-[120px] leading-[0.92]">
+            <p
+              className="font-serif italic text-xs tracking-[0.28em] uppercase text-[#c9a877] mb-8"
+              style={{ textShadow: "0 2px 12px rgba(0,0,0,0.65)" }}
+            >
+              Westlake · Tarrytown · Lakeway
+            </p>
+            <h1
+              className="display text-[#faf6f0] text-[14vw] sm:text-[10vw] lg:text-[7.5vw] xl:text-[120px] leading-[0.92]"
+              style={{ textShadow: "0 4px 24px rgba(0,0,0,0.75), 0 1px 2px rgba(0,0,0,0.55)" }}
+            >
               Bespoke Real Estate<br />
               <em className="italic">Without Compromise.</em>
             </h1>
-            <p className="editorial text-[#faf6f0]/85 text-lg lg:text-xl max-w-xl mt-8 leading-relaxed">
+            <p
+              className="editorial text-[#faf6f0] text-lg lg:text-xl max-w-xl mt-8 leading-relaxed"
+              style={{ textShadow: "0 2px 14px rgba(0,0,0,0.75)" }}
+            >
               Discreet, white-glove representation for discerning buyers and sellers navigating Austin's most exclusive residential markets — from Westlake ridgelines to Lake Travis waterfront and the Dripping Springs hill country.
             </p>
           </div>
