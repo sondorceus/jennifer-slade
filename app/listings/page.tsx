@@ -8,7 +8,7 @@ export const metadata = {
   description: "A selection of representative sales and active offerings across Austin's premier residential enclaves.",
 };
 
-const HONEY_CREEK_PHOTOS = ["/listings/honey-creek-1.jpg"];
+const HONEY_CREEK_PHOTOS = Array.from({ length: 50 }, (_, i) => `/listings/honey-creek-${i + 1}.jpg`);
 
 // Real listings cross-referenced from Skywalker's 2026-05-17 intel.
 // `region` is the canonical area used for the pill-filter UI in

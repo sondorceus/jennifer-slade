@@ -18,14 +18,13 @@ type Featured = {
   images?: string[];
 };
 
-// Honey Creek hero photo — Redfin only exposes the hero at full
-// resolution (1152x768 / 287KB). The 11 gallery thumbnails are
-// auto-generated 25-50KB variants on the listing detail page and
-// can't be coerced to higher-res without clicking through to the
-// homeowner-verification gate. Keeping the carousel set to ONLY
-// the hero until either (a) Skywalker uploads the full-res
-// gallery, or (b) we wire a paid IDX/MLS feed.
-const HONEY_CREEK_PHOTOS = ["/listings/honey-creek-1.jpg"];
+// Honey Creek — the full 50-photo professional gallery delivered by
+// Skywalker on 2026-05-17 (39 DSC interior/exterior + 11 DJI aerials).
+// Source images live in his Downloads/211 photos/ folder, resized to
+// 1600px wide / JPEG q80 progressive by scripts/build-listing-photos.py.
+// Ordered DSC-then-DJI so the gallery tells the story: facade →
+// rooms → landscape → aerial closers.
+const HONEY_CREEK_PHOTOS = Array.from({ length: 50 }, (_, i) => `/listings/honey-creek-${i + 1}.jpg`);
 
 const FEATURED: Featured[] = [
   { id: "honey-creek-lakeway",   status: "Active",        title: "211 Honey Creek Ct #6, Lakeway",    price: "$799,900",          area: "Lakeway · 78738", images: HONEY_CREEK_PHOTOS },

@@ -13,7 +13,9 @@ type Props = {
   alt: string;
   /** ms between auto-advances. Default 4500. */
   interval?: number;
-  /** Aspect-ratio class, e.g. "aspect-[4/5]" (default) or "aspect-[16/10]". */
+  /** Aspect-ratio class. Default 3/2 matches the orientation of
+   *  almost every professional real-estate photo (DSLR landscape +
+   *  drone 4:3 both fit cleanly without top/bottom crop). */
   aspect?: string;
   /** Optional: render dots indicator. Default true. */
   showDots?: boolean;
@@ -23,7 +25,7 @@ export default function ListingCarousel({
   images,
   alt,
   interval = 4500,
-  aspect = "aspect-[4/5]",
+  aspect = "aspect-[3/2]",
   showDots = true,
 }: Props) {
   const [idx, setIdx] = useState(0);
