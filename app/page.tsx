@@ -35,6 +35,7 @@ type Featured = {
 const HONEY_CREEK_PHOTOS = Array.from({ length: 50 }, (_, i) => `/listings/honey-creek-${i + 1}.jpg`);
 const WESTHILL_PHOTOS   = Array.from({ length: 12 }, (_, i) => `/listings/westhill-${i + 1}.jpg`);
 const CANYONWOOD_PHOTOS = Array.from({ length: 5 },  (_, i) => `/listings/canyonwood-${i + 1}.jpg`);
+const SARACEN_PHOTOS    = Array.from({ length: 11 }, (_, i) => `/listings/saracen-${i + 1}.jpg`);
 
 const FEATURED: Featured[] = [
   {
@@ -60,6 +61,18 @@ const FEATURED: Featured[] = [
     meta: "MLS 1754607",
     desc: "Santa Barbara-style free-standing residence sitting between two peaceful valleys in a coveted Lakeway enclave — panoramic canyon views and lock-and-leave living. One of just 30 homes in an exclusive two-street community, with vaulted ceilings, his-and-her showers, and a professionally landscaped fully fenced backyard. Four minutes to H-E-B, ten to the Hill Country Galleria.",
     images: HONEY_CREEK_PHOTOS,
+  },
+  {
+    id: "saracen-austin-hills",
+    status: "Recently Sold",
+    title: "Saracen Road Modern, Austin",
+    price: "Sold · $1,250,000+",
+    area: "Austin · 78733",
+    regionLabel: "Austin, TX 78733",
+    beds: 5, baths: 4.5, sqft: 4928, acres: 0.3,
+    meta: "Closed March 23, 2026 · MLS 7274585",
+    desc: "Architectural modern farmhouse in Austin Hills — twin-gable charcoal façade, glass garage door, drought-tolerant landscape, fenced rear with pool and outdoor entertaining. Recent closing representing Jennifer's continued momentum in the 78733 corridor.",
+    images: SARACEN_PHOTOS,
   },
   {
     id: "dripping-springs-sold",

@@ -5,6 +5,7 @@ import type { BrowserListing } from "../components/ListingsBrowser";
 export const HONEY_CREEK_PHOTOS = Array.from({ length: 50 }, (_, i) => `/listings/honey-creek-${i + 1}.jpg`);
 export const WESTHILL_PHOTOS    = Array.from({ length: 12 }, (_, i) => `/listings/westhill-${i + 1}.jpg`);
 export const CANYONWOOD_PHOTOS  = Array.from({ length: 5 },  (_, i) => `/listings/canyonwood-${i + 1}.jpg`);
+export const SARACEN_PHOTOS     = Array.from({ length: 11 }, (_, i) => `/listings/saracen-${i + 1}.jpg`);
 
 // Canonical listing dataset. Verified against Skywalker's 2026-05-17
 // intel (Matrix ABOR + Homes.com + Redfin cross-references).
@@ -48,6 +49,19 @@ export const LISTINGS: BrowserListing[] = [
     price: "Sold · $2,350,000",
     meta: "Verified Homes.com closing record",
     desc: "Multi-million dollar Dripping Springs closing — representative of Jennifer's track record on hill-country acreage and architectural-luxury transactions.",
+  },
+  {
+    id: "saracen-austin-hills",
+    status: "Sold",
+    title: "Saracen Road Modern",
+    area: "Austin · 78733",
+    region: "West Austin",
+    regionLabel: "Austin, TX 78733",
+    beds: 5, baths: 4.5, sqft: 4928, acres: 0.3,
+    price: "Sold · $1,250,000+",
+    meta: "Closed March 23, 2026 · MLS 7274585",
+    desc: "Architectural modern farmhouse in Austin Hills — twin-gable charcoal façade, glass garage door, drought-tolerant landscape, fenced rear with pool and outdoor entertaining. Recent closing representing Jennifer's continued momentum in the 78733 corridor.",
+    images: SARACEN_PHOTOS,
   },
   {
     id: "canyonwood-dripping",
