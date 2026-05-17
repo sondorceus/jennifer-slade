@@ -249,26 +249,41 @@ export default function Home() {
                   </div>
                   <span className="text-[10px] tracking-[0.22em] uppercase text-[#1a1716]/50">{items.length} {items.length === 1 ? "property" : "properties"}</span>
                 </div>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
-                  {items.map((p) => (
-                    <ListingCard
-                      key={p.id}
-                      id={p.id}
-                      title={p.title}
-                      area={p.area}
-                      price={p.price}
-                      status={p.status}
-                      meta={p.meta}
-                      desc={p.desc}
-                      images={p.images}
-                      beds={p.beds}
-                      baths={p.baths}
-                      sqft={p.sqft}
-                      acres={p.acres}
-                      regionLabel={p.regionLabel}
-                      compact
-                    />
-                  ))}
+                {/* Quick-scroll menu — horizontal swipe row at all
+                    viewports per Skywalker 2026-05-17. Each card has a
+                    fixed min-width so multiple stay visible side-by-side
+                    on tablet/desktop and snap-scroll cleanly on mobile.
+                    Right-edge fade hints at more content. */}
+                <div className="relative -mx-6 lg:mx-0">
+                  <div
+                    className="flex gap-5 lg:gap-6 px-6 lg:px-0 overflow-x-auto pb-2 lg:pb-0 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                  >
+                    {items.map((p) => (
+                      <div key={p.id} className="shrink-0 w-[78vw] sm:w-[48%] lg:w-[31%] snap-start">
+                        <ListingCard
+                          id={p.id}
+                          title={p.title}
+                          area={p.area}
+                          price={p.price}
+                          status={p.status}
+                          meta={p.meta}
+                          desc={p.desc}
+                          images={p.images}
+                          beds={p.beds}
+                          baths={p.baths}
+                          sqft={p.sqft}
+                          acres={p.acres}
+                          regionLabel={p.regionLabel}
+                          compact
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  {/* Right-edge fade — only show when there are enough
+                      cards to scroll (more than fit on desktop). */}
+                  {items.length > 3 && (
+                    <div className="absolute right-0 top-0 bottom-2 w-16 bg-gradient-to-l from-[#faf6f0] to-transparent pointer-events-none lg:hidden" />
+                  )}
                 </div>
               </div>
             );
