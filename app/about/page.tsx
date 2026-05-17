@@ -27,9 +27,14 @@ export default function AboutPage() {
       <section className="px-6 lg:px-12 py-20 lg:py-32 bg-[#1a1716] text-[#faf6f0]">
         <div className="max-w-[1200px] mx-auto grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           <div className="lg:col-span-5">
-            {/* Portrait placeholder — swap for real Jennifer headshot when supplied. */}
-            <div className="aspect-[4/5] w-full bg-[radial-gradient(ellipse_60%_50%_at_50%_30%,rgba(201,168,119,0.18),transparent_60%),linear-gradient(150deg,#2a2520_0%,#15110f_100%)] rounded-md border border-[#faf6f0]/10" />
-            <p className="text-[10.5px] tracking-[0.2em] uppercase text-[#faf6f0]/40 mt-4 text-center">[Portrait — Jennifer Slade]</p>
+            <div className="relative">
+              <div className="absolute -inset-4 bg-[radial-gradient(ellipse_70%_55%_at_50%_45%,rgba(201,168,119,0.16),transparent_65%)] blur-2xl" />
+              <img
+                src="/jennifer-slade.jpg"
+                alt="Jennifer Slade — Luxury Real Estate, Austin"
+                className="relative w-full aspect-[4/5] object-cover rounded-md border border-[#faf6f0]/10"
+              />
+            </div>
           </div>
           <div className="lg:col-span-7">
             <p className="eyebrow text-[#c9a877] mb-5">Jennifer Slade</p>

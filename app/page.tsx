@@ -170,24 +170,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ABOUT INTRO */}
-      <section className="bg-[#faf6f0] py-24 lg:py-36 px-6 lg:px-12">
-        <div className="max-w-[1100px] mx-auto grid lg:grid-cols-12 gap-12 lg:gap-20">
-          <div className="lg:col-span-4">
-            <p className="eyebrow text-[#8d6f4f] mb-5">About Jennifer</p>
-          </div>
-          <div className="lg:col-span-8">
-            <h2 className="display text-[#1a1716] text-4xl sm:text-5xl lg:text-6xl leading-[1.08] max-w-3xl">
-              Representation for clients who measure success in <em className="italic">privacy, craftsmanship, and patience.</em>
-            </h2>
-            <p className="editorial text-lg lg:text-xl text-[#1a1716]/75 max-w-2xl mt-8 leading-relaxed">
-              The work begins with listening — to the architecture, to the neighborhood, to the timeline. Every transaction is built around discretion and unhurried execution. A small number of clients each year, by design, each given the full breadth of the practice's attention.
-            </p>
-            <Link href="/about" className="inline-flex items-center gap-2 mt-10 text-[11.5px] tracking-[0.2em] uppercase text-[#1a1716] link-anim">Learn More <span aria-hidden>→</span></Link>
-          </div>
-        </div>
-      </section>
-
       {/* FEATURED PROPERTIES — grouped by status (Skywalker 2026-05-17
           clarity-audit): Active / Private Exclusives & Coming Soon /
           Past Successes. Each section header + card grid. Renders only
@@ -239,6 +221,115 @@ export default function Home() {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* AGENT BRAND — editorial bio + portrait. Sits below Featured
+          Properties per Skywalker's 2026-05-17 flow: hero -> proof ->
+          inventory -> the person who handles it. */}
+      <section className="bg-[#1a1716] text-[#faf6f0] py-24 lg:py-36 px-6 lg:px-12">
+        <div className="max-w-[1300px] mx-auto grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+          <div className="lg:col-span-5">
+            {/* Portrait — Jennifer's editorial headshot. Slight overflow
+                vignette behind to keep her isolated from the dark band. */}
+            <div className="relative">
+              <div className="absolute -inset-4 bg-[radial-gradient(ellipse_75%_60%_at_50%_45%,rgba(201,168,119,0.18),transparent_65%)] blur-2xl" />
+              <img
+                src="/jennifer-slade.jpg"
+                alt="Jennifer Slade — Luxury Real Estate, Austin"
+                className="relative w-full max-w-[440px] mx-auto aspect-[4/5] object-cover rounded-sm"
+              />
+            </div>
+          </div>
+          <div className="lg:col-span-7">
+            <p className="eyebrow text-[#c9a877] mb-5">The Agent</p>
+            <h2 className="display text-[#faf6f0] text-4xl sm:text-5xl lg:text-6xl leading-[1.08] max-w-2xl">
+              Representation built on <em className="italic">privacy, craft, and a small roster.</em>
+            </h2>
+            <div className="editorial text-lg text-[#faf6f0]/85 leading-relaxed space-y-5 mt-8 max-w-2xl">
+              <p>
+                Jennifer Slade represents high-end buyers and sellers across Austin's most considered enclaves —
+                Westlake, Tarrytown, Lakeway, Barton Creek, and the Dripping Springs hill country. Her practice
+                is defined by confidentiality, architectural appreciation, and white-glove concierge service.
+              </p>
+              <p>
+                The work begins with listening — to the architecture, to the neighborhood, to the timeline.
+                Every transaction is handled with discretion and unhurried execution. A small number of clients
+                each year, by design, each given the full breadth of the practice's attention.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-4 mt-10">
+              <Link href="/about" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#c9a877] text-[#1a1716] text-[11.5px] tracking-[0.2em] uppercase font-semibold hover:bg-[#faf6f0] transition-colors">
+                Full Biography <span aria-hidden>→</span>
+              </Link>
+              <Link href="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[#faf6f0]/60 text-[#faf6f0] text-[11.5px] tracking-[0.2em] uppercase font-medium hover:bg-[#faf6f0]/10 transition-colors">
+                Begin a Quiet Conversation <span aria-hidden>→</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICES BREAKDOWN — 3-column "What She Offers" per Skywalker
+          2026-05-17 elevation guide: Sellers / Buyers / Private Exclusives. */}
+      <section className="bg-[#faf6f0] py-24 lg:py-36 px-6 lg:px-12">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="text-center mb-16 lg:mb-20">
+            <p className="eyebrow text-[#8d6f4f] mb-4">What we offer</p>
+            <h2 className="display text-[#1a1716] text-4xl sm:text-5xl lg:text-6xl leading-[1.05] max-w-3xl mx-auto">
+              A different standard <em className="italic">of service.</em>
+            </h2>
+            <p className="editorial text-[#1a1716]/70 text-lg lg:text-xl max-w-2xl mx-auto mt-6 leading-relaxed">
+              Three distinct paths through the practice — each built for the way high-net-worth clients actually buy and sell.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-px bg-[#1a1716]/15">
+            {/* Sellers */}
+            <div className="bg-[#faf6f0] p-8 lg:p-10 flex flex-col">
+              <p className="eyebrow text-[#c9a877] mb-4">For Sellers</p>
+              <h3 className="font-serif text-3xl text-[#1a1716] leading-tight mb-5">Strategic listing representation.</h3>
+              <ul className="space-y-3 font-serif text-base text-[#1a1716]/80 leading-relaxed flex-1">
+                <li>· Bespoke architectural staging partnerships</li>
+                <li>· Cinematic videography & editorial photography</li>
+                <li>· Global luxury-network distribution</li>
+                <li>· Targeted digital + print campaigns</li>
+                <li>· Discreet pre-market network introductions</li>
+              </ul>
+              <Link href="/sell" className="link-anim mt-8 text-[11px] tracking-[0.2em] uppercase font-semibold text-[#1a1716]">
+                Request a Bespoke Valuation →
+              </Link>
+            </div>
+            {/* Buyers */}
+            <div className="bg-[#faf6f0] p-8 lg:p-10 flex flex-col">
+              <p className="eyebrow text-[#c9a877] mb-4">For Buyers</p>
+              <h3 className="font-serif text-3xl text-[#1a1716] leading-tight mb-5">White-glove acquisition service.</h3>
+              <ul className="space-y-3 font-serif text-base text-[#1a1716]/80 leading-relaxed flex-1">
+                <li>· Off-market property sourcing</li>
+                <li>· Hyper-local neighborhood deep-dives</li>
+                <li>· Private network introductions</li>
+                <li>· Architectural intelligence + provenance research</li>
+                <li>· Relocation concierge for inbound HNW clients</li>
+              </ul>
+              <Link href="/buy" className="link-anim mt-8 text-[11px] tracking-[0.2em] uppercase font-semibold text-[#1a1716]">
+                Request Private Consultation →
+              </Link>
+            </div>
+            {/* Private Exclusives */}
+            <div className="bg-[#1a1716] text-[#faf6f0] p-8 lg:p-10 flex flex-col">
+              <p className="eyebrow text-[#c9a877] mb-4">Private Exclusives</p>
+              <h3 className="font-serif text-3xl text-[#faf6f0] leading-tight mb-5">Quietly handled, never listed.</h3>
+              <ul className="space-y-3 font-serif text-base text-[#faf6f0]/80 leading-relaxed flex-1">
+                <li>· Pocket-listing representation for high-profile clients</li>
+                <li>· NDA-protected showings</li>
+                <li>· Vetted-buyer-only access</li>
+                <li>· Coordination with wealth managers & family offices</li>
+                <li>· Architectural-restoration discretion</li>
+              </ul>
+              <Link href="/contact" className="link-anim mt-8 text-[11px] tracking-[0.2em] uppercase font-semibold text-[#c9a877]">
+                Inquire Privately →
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
