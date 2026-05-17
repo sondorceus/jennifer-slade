@@ -3,6 +3,7 @@ import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import LeadForm from "./components/LeadForm";
 import ListingCard from "./components/ListingCard";
+import HeroVideoLoop from "./components/HeroVideoLoop";
 
 // Featured properties — reflects Jennifer's verified transactional footprint
 // per Skywalker 2026-05-17 (Homes.com, HAR, Unlock MLS, Kuper Sotheby cross-
@@ -178,14 +179,16 @@ export default function Home() {
           }}
         />
         {/* Background video — Austin / luxury establishing loop from
-            Skywalker 2026-05-17. 8s 1280x720, autoplays muted, loops,
-            object-cover so it fills the entire hero. */}
-        <video
-          className="absolute inset-0 w-full h-full object-cover z-[1] motion-reduce:hidden"
-          src="/video/hero-loop.mp4"
-          autoPlay muted loop playsInline preload="auto"
-          poster=""
-        />
+            Skywalker 2026-05-17. Uses a seamless-loop component that
+            renders two stacked <video>s and crossfades between them
+            during the last ~0.9s of each cycle, so the camera "keeps
+            moving" — no visible stop-and-replay seam. */}
+        <div className="absolute inset-0 z-[1] motion-reduce:hidden">
+          <HeroVideoLoop
+            src="/video/hero-loop.mp4"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </div>
         {/* Contrast scrim — pushes the bright sunshine in the video
             down so the headline reads cleanly. Three-layer recipe:
             (a) vertical gradient — heaviest top and bottom for the
