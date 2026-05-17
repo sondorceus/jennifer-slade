@@ -8,15 +8,25 @@ import ListingDetailModal from "./ListingDetailModal";
 // Renders the carousel + status badge, opens a full-screen detail
 // lightbox on image click (and on the "Learn more" / "Open" links).
 
+// Each status gets a visually distinct treatment per Skywalker
+// 2026-05-17 — "sold / active hard to tell the difference, we
+// need to make them [distinct]". Four luxury-aligned palettes:
+//   Active / Just Listed / For Sale  → SOLID GOLD pill (attention)
+//   Coming Soon                       → GOLD OUTLINE only ("future")
+//   Off-Market                        → SOLID DARK CHARCOAL pill
+//                                       with gold text (discretion)
+//   Pending                           → muted gray pill (in-flight)
+//   Sold / Recently Sold              → SOLID DEEP COGNAC pill with
+//                                       cream text (finality)
 const STATUS_BADGE: Record<string, string> = {
-  "Active":        "bg-[#c9a877]/15 text-[#c9a877] border-[#c9a877]/30",
-  "Coming Soon":   "bg-[#c9a877]/15 text-[#c9a877] border-[#c9a877]/35",
-  "Just Listed":   "bg-[#faf6f0] text-[#1a1716] border-[#1a1716]/35",
-  "For Sale":      "bg-[#1a1716] text-[#faf6f0] border-[#1a1716]",
-  "Pending":       "bg-[#1a1716]/10 text-[#1a1716]/65 border-[#1a1716]/15",
-  "Off-Market":    "bg-transparent text-[#1a1716]/85 border-[#1a1716]/35",
-  "Sold":          "bg-[#1a1716] text-[#faf6f0] border-[#1a1716]",
-  "Recently Sold": "bg-[#1a1716]/90 text-[#c9a877] border-[#c9a877]/60",
+  "Active":        "bg-[#c9a877] text-[#1a1716] border-[#c9a877]",
+  "Just Listed":   "bg-[#c9a877] text-[#1a1716] border-[#c9a877]",
+  "For Sale":      "bg-[#c9a877] text-[#1a1716] border-[#c9a877]",
+  "Coming Soon":   "bg-transparent text-[#c9a877] border-[#c9a877]",
+  "Off-Market":    "bg-[#1a1716] text-[#c9a877] border-[#1a1716]",
+  "Pending":       "bg-[#1a1716]/10 text-[#1a1716]/70 border-[#1a1716]/15",
+  "Sold":          "bg-[#5a3a2e] text-[#faf6f0] border-[#5a3a2e]",
+  "Recently Sold": "bg-[#5a3a2e] text-[#faf6f0] border-[#5a3a2e]",
 };
 
 type Props = {

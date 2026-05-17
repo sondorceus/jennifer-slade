@@ -201,14 +201,18 @@ export default function ListingDetailModal({
   );
 }
 
+// Mirror the ListingCard palette so the badge looks identical
+// between the card and the open detail modal.
 function statusBadge(status: string): string {
   switch (status) {
-    case "Active":        return "bg-[#c9a877]/15 text-[#c9a877] border-[#c9a877]/35";
-    case "Coming Soon":   return "bg-[#c9a877]/15 text-[#c9a877] border-[#c9a877]/35";
-    case "Pending":       return "bg-[#1a1716]/10 text-[#1a1716]/65 border-[#1a1716]/15";
+    case "Active":
+    case "Just Listed":
+    case "For Sale":      return "bg-[#c9a877] text-[#1a1716] border-[#c9a877]";
+    case "Coming Soon":   return "bg-transparent text-[#c9a877] border-[#c9a877]";
+    case "Off-Market":    return "bg-[#1a1716] text-[#c9a877] border-[#1a1716]";
+    case "Pending":       return "bg-[#1a1716]/10 text-[#1a1716]/70 border-[#1a1716]/15";
     case "Sold":
-    case "Recently Sold": return "bg-[#1a1716] text-[#faf6f0] border-[#1a1716]";
-    case "Off-Market":    return "bg-transparent text-[#1a1716]/85 border-[#1a1716]/35";
+    case "Recently Sold": return "bg-[#5a3a2e] text-[#faf6f0] border-[#5a3a2e]";
     default:              return "bg-transparent text-[#1a1716]/65 border-[#1a1716]/25";
   }
 }
