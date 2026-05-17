@@ -33,11 +33,12 @@ const TESTIMONIALS = [
   { author: "S. — Barton Creek seller",      quote: "Patient, considered, and absolutely unhurried. The valuation she gave us proved correct to the dollar nine months later." },
 ];
 
+// Authority block — values per Skywalker's 2026-05-17 production-ready
+// Proof of Authority skeleton. 3 stats, centered, dark band.
 const STATS = [
-  { stat: "$[—]M",  unit: "Lifetime Sales" },
-  { stat: "[—]",    unit: "Years in Market" },
-  { stat: "[—]%",   unit: "Sales-to-List Ratio" },
-  { stat: "[—]",    unit: "Off-Market Closes" },
+  { stat: "$2.4M+",      unit: "Average Transaction Bracket" },
+  { stat: "100%",        unit: "Client Privacy & Discretion" },
+  { stat: "Central TX",  unit: "From Westlake Estates to Ranches" },
 ];
 
 export default function Home() {
@@ -79,20 +80,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* AUTHORITY STATS — 4-card credentials block */}
-      <section className="bg-[#faf6f0] py-20 lg:py-28 px-6 lg:px-12 border-b border-[#1a1716]/10">
-        <div className="max-w-[1400px] mx-auto">
-          <p className="eyebrow text-[#8d6f4f] mb-3 text-center">The track record</p>
-          <h2 className="display text-[#1a1716] text-3xl sm:text-4xl lg:text-5xl text-center max-w-3xl mx-auto leading-tight mb-14">
-            The results you want, <em>the excellence you deserve.</em>
-          </h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-[#1a1716]/15 max-w-5xl mx-auto">
-            {STATS.map((s) => (
-              <div key={s.unit} className="bg-[#faf6f0] px-6 py-10 text-center">
-                <p className="font-serif text-5xl lg:text-6xl text-[#c9a877] leading-none">{s.stat}</p>
-                <p className="text-[11px] tracking-[0.2em] uppercase text-[#1a1716]/65 mt-4">{s.unit}</p>
-              </div>
-            ))}
+      {/* PROOF OF AUTHORITY — 3 stats on dark band per Skywalker's spec */}
+      <section className="bg-[#1a1716] border-y border-[#0f0c0a] text-[#faf6f0] py-16 lg:py-24 px-6 md:px-12">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+          <div className="space-y-2">
+            <h3 className="text-4xl lg:text-5xl font-serif text-[#faf6f0]">{STATS[0].stat}</h3>
+            <p className="text-xs uppercase tracking-[0.22em] text-[#faf6f0]/55 font-light">{STATS[0].unit}</p>
+          </div>
+          <div className="space-y-2 border-y md:border-y-0 md:border-x border-[#faf6f0]/15 py-8 md:py-0">
+            <h3 className="text-4xl lg:text-5xl font-serif text-[#faf6f0]">{STATS[1].stat}</h3>
+            <p className="text-xs uppercase tracking-[0.22em] text-[#faf6f0]/55 font-light">{STATS[1].unit}</p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-4xl lg:text-5xl font-serif text-[#faf6f0]">{STATS[2].stat}</h3>
+            <p className="text-xs uppercase tracking-[0.22em] text-[#faf6f0]/55 font-light">{STATS[2].unit}</p>
           </div>
         </div>
       </section>
