@@ -1,113 +1,13 @@
 import Link from "next/link";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
-import ListingsBrowser, { type BrowserListing } from "../components/ListingsBrowser";
+import ListingsBrowser from "../components/ListingsBrowser";
+import { LISTINGS } from "../lib/listings-data";
 
 export const metadata = {
   title: "Curated Portfolio — Jennifer Slade Luxury Real Estate",
   description: "A selection of representative sales and active offerings across Austin's premier residential enclaves.",
 };
-
-const HONEY_CREEK_PHOTOS = Array.from({ length: 50 }, (_, i) => `/listings/honey-creek-${i + 1}.jpg`);
-const WESTHILL_PHOTOS    = Array.from({ length: 12 }, (_, i) => `/listings/westhill-${i + 1}.jpg`);
-const CANYONWOOD_PHOTOS  = Array.from({ length: 5 },  (_, i) => `/listings/canyonwood-${i + 1}.jpg`);
-
-// Real listings cross-referenced from Skywalker's 2026-05-17 intel.
-// `region` is the canonical area used for the pill-filter UI in
-// ListingsBrowser (groups Horseshoe Bay + Dripping Springs etc.
-// under "Hill Country / Lots" per Skywalker's spec).
-const LISTINGS: BrowserListing[] = [
-  {
-    id: "westhill-south-austin",
-    status: "Active",
-    title: "2904 Westhill Dr",
-    area: "South Austin · 78704",
-    region: "South Austin",
-    regionLabel: "Austin, TX 78704",
-    beds: 5, baths: 4.5, sqft: 3530, acres: 0.21,
-    price: "$3,190,000",
-    meta: "Built 2025 · MLS 2682180",
-    desc: "Modern luxury new build in the heart of Austin's 78704. A 5-bedroom, 4.5-bathroom masterpiece blending architectural sophistication with everyday comfort. Chef's kitchen with 54\" SubZero, Wolf 48\" gas cooktop with separate double oven, quartz waterfall island, and a walk-through pantry with second sink, fridge, and dishwasher. Double-sided fireplace, main-level primary suite with balcony built-in outdoor kitchen overlooking the pool, wraparound putting green, and outdoor fireplace. Second-level living + three bedrooms. Lower level with private entrance — home office, guest retreat, or game room with full bath and direct pool access. Owner will consider owner-finance options.",
-    images: WESTHILL_PHOTOS,
-  },
-  {
-    id: "honey-creek-lakeway",
-    status: "Active",
-    title: "211 Honey Creek Ct #6",
-    area: "Lakeway · 78738",
-    region: "Lakeway",
-    regionLabel: "Lakeway, TX 78738",
-    beds: 3, baths: 2.5, sqft: 1903,
-    price: "$799,900",
-    meta: "MLS 1754607",
-    desc: "Santa Barbara-style free-standing residence sitting between two peaceful valleys in a coveted Lakeway enclave — panoramic canyon views and lock-and-leave living. One of just 30 homes in an exclusive two-street community, with vaulted ceilings, his-and-her showers, and a professionally landscaped fully fenced backyard. Four minutes to H-E-B, ten to the Hill Country Galleria.",
-    images: HONEY_CREEK_PHOTOS,
-  },
-  {
-    id: "dripping-springs-sold",
-    status: "Sold",
-    title: "Hill Country Luxury Estate",
-    area: "Dripping Springs",
-    region: "Hill Country / Lots",
-    regionLabel: "Dripping Springs, TX",
-    price: "Sold · $2,350,000",
-    meta: "Verified Homes.com closing record",
-    desc: "Multi-million dollar Dripping Springs closing — representative of Jennifer's track record on hill-country acreage and architectural-luxury transactions.",
-  },
-  {
-    id: "canyonwood-dripping",
-    status: "Sold",
-    title: "201 N Canyonwood Dr",
-    area: "Dripping Springs · 78620",
-    region: "Hill Country / Lots",
-    regionLabel: "Dripping Springs, TX 78620",
-    beds: 8, baths: 6, sqft: 5422, acres: 2,
-    price: "Sold · Multi-million",
-    meta: "MLS 6012922 · Texas Hill Country resort estate",
-    desc: "Resort-style hill country estate on two private acres — main residence, guest wings, and outbuildings totaling approximately 9,000 sqft of conditioned space. Stone-and-metal hill-country vernacular with sunset views, multi-bay garage, smart-home infrastructure, sauna, and gallery-grade interior finishes.",
-    images: CANYONWOOD_PHOTOS,
-  },
-  {
-    id: "miss-kitty-horseshoe",
-    status: "Active",
-    title: "Miss Kitty — Lake Country Acreage",
-    area: "Horseshoe Bay",
-    region: "Hill Country / Lots",
-    price: "Inquire",
-    meta: "Active land asset · HAR-listed",
-    desc: "Build-ready acreage in the Horseshoe Bay lake-country corridor. Western frontage, hill-country views, owner-builder ready.",
-  },
-  {
-    id: "gunsmoke-horseshoe",
-    status: "Active",
-    title: "Gunsmoke — Lake Country Acreage",
-    area: "Horseshoe Bay",
-    region: "Hill Country / Lots",
-    price: "Inquire",
-    meta: "Active land asset · HAR-listed",
-    desc: "Adjacent build-ready acreage with similar elevation, view orientation, and proximity to Lake LBJ.",
-  },
-  {
-    id: "westlake-ridge",
-    status: "Coming Soon",
-    title: "Westlake Ridgeline Estate",
-    area: "Westlake",
-    region: "Westlake",
-    price: "Price upon request",
-    meta: "Specs [TBD]",
-    desc: "Representative Westlake ridgeline opportunity — architecture, view orientation, and lifestyle narrative on inquiry.",
-  },
-  {
-    id: "tarrytown-classic",
-    status: "Off-Market",
-    title: "Tarrytown Villa with Walled Garden",
-    area: "Tarrytown",
-    region: "Tarrytown",
-    price: "Inquire privately",
-    meta: "4 bed · 5 bath · 4,600 sqft · 0.4 ac",
-    desc: "Quiet listing — discussed privately under NDA with qualified buyers. Mediterranean-revival vernacular in the heart of Tarrytown's heritage corridor.",
-  },
-];
 
 export default function ListingsPage() {
   return (
@@ -120,8 +20,30 @@ export default function ListingsPage() {
           A curated <em className="italic">selection.</em>
         </h1>
         <p className="editorial text-[#1a1716]/75 text-xl lg:text-2xl max-w-2xl mt-10 leading-relaxed">
-          Active offerings, private exclusives, and recently closed transactions. Filter by region or browse the full collection — full provenance and tours available privately.
+          Active offerings, private exclusives, and recently closed transactions. Browse all, or jump into a category portal.
         </p>
+
+        {/* Portal quick-links — each category gets a dedicated route. */}
+        <div className="flex flex-wrap gap-3 mt-10">
+          <Link
+            href="/listings/active"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#1a1716] text-[#1a1716] text-[11px] tracking-[0.2em] uppercase font-medium hover:bg-[#1a1716] hover:text-[#faf6f0] transition-colors"
+          >
+            Active Listings →
+          </Link>
+          <Link
+            href="/listings/exclusives"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#1a1716] text-[#1a1716] text-[11px] tracking-[0.2em] uppercase font-medium hover:bg-[#1a1716] hover:text-[#faf6f0] transition-colors"
+          >
+            Private Exclusives →
+          </Link>
+          <Link
+            href="/listings/sold"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#1a1716] text-[#1a1716] text-[11px] tracking-[0.2em] uppercase font-medium hover:bg-[#1a1716] hover:text-[#faf6f0] transition-colors"
+          >
+            Past Successes →
+          </Link>
+        </div>
       </section>
 
       <section className="px-6 lg:px-12 pb-24 lg:pb-32 max-w-[1400px] mx-auto">

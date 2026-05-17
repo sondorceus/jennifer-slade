@@ -21,17 +21,22 @@ export type BrowserListing = {
 };
 
 // Three luxury-real-estate sections, ordered for narrative flow.
-const SECTIONS: Array<{ title: string; eyebrow: string; statuses: BrowserListing["status"][] }> = [
-  { title: "Active Listings",                  eyebrow: "On the market now",      statuses: ["Active"] },
-  { title: "Private Exclusives & Coming Soon", eyebrow: "Before the public market", statuses: ["Off-Market", "Coming Soon", "Pending"] },
-  { title: "Past Successes",                    eyebrow: "Recent representative closings", statuses: ["Sold"] },
+const SECTIONS: Array<{ key: SectionKey; title: string; eyebrow: string; statuses: BrowserListing["status"][] }> = [
+  { key: "active",      title: "Active Listings",                  eyebrow: "On the market now",                 statuses: ["Active"] },
+  { key: "exclusives",  title: "Private Exclusives & Coming Soon", eyebrow: "Before the public market",          statuses: ["Off-Market", "Coming Soon", "Pending"] },
+  { key: "sold",        title: "Past Successes",                    eyebrow: "Recent representative closings",   statuses: ["Sold"] },
 ];
+
+export type SectionKey = "active" | "exclusives" | "sold";
 
 type Props = {
   listings: BrowserListing[];
+  /** If set, only render this single section (used by the dedicated
+   *  portal pages /listings/active, /listings/exclusives, /listings/sold). */
+  only?: SectionKey;
 };
 
-export default function ListingsBrowser({ listings }: Props) {
+export default function ListingsBrowser({ listings, only }: Props) {
   const regions = useMemo(() => {
     const r = new Set<string>();
     for (const l of listings) r.add(l.region);
@@ -73,7 +78,7 @@ export default function ListingsBrowser({ listings }: Props) {
       </div>
 
       {/* Status sections — each shows the filtered listings in that bucket */}
-      {SECTIONS.map((section) => {
+      {SECTIONS.filter((s) => !only || s.key === only).map((section) => {
         const items = filtered.filter((l) => section.statuses.includes(l.status));
         if (items.length === 0) return null;
         return (

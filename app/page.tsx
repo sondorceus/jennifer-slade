@@ -232,9 +232,9 @@ export default function Home() {
           </div>
 
           {([
-            { title: "Active Listings",                  eyebrow: "On the market now",                 statuses: ["Active"] },
-            { title: "Private Exclusives & Coming Soon", eyebrow: "Before the public market",          statuses: ["Off-Market", "Coming Soon", "Just Listed"] },
-            { title: "Past Successes",                    eyebrow: "Recent representative closings",   statuses: ["Sold", "Recently Sold"] },
+            { title: "Active Listings",                  eyebrow: "On the market now",                 portal: "/listings/active",     statuses: ["Active"] },
+            { title: "Private Exclusives & Coming Soon", eyebrow: "Before the public market",          portal: "/listings/exclusives", statuses: ["Off-Market", "Coming Soon", "Just Listed"] },
+            { title: "Past Successes",                    eyebrow: "Recent representative closings",   portal: "/listings/sold",       statuses: ["Sold", "Recently Sold"] },
           ] as const).map((section) => {
             const items = FEATURED.filter((p) => (section.statuses as readonly string[]).includes(p.status));
             if (items.length === 0) return null;
@@ -247,7 +247,9 @@ export default function Home() {
                       {section.title}<em className="italic">.</em>
                     </h3>
                   </div>
-                  <span className="text-[10px] tracking-[0.22em] uppercase text-[#1a1716]/50">{items.length} {items.length === 1 ? "property" : "properties"}</span>
+                  <Link href={section.portal} className="link-anim text-[11px] tracking-[0.22em] uppercase font-semibold text-[#1a1716]">
+                    View All <span aria-hidden>→</span>
+                  </Link>
                 </div>
                 {/* Quick-scroll menu — horizontal swipe row at all
                     viewports per Skywalker 2026-05-17. Each card has a
