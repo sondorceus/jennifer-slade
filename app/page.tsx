@@ -2,21 +2,27 @@ import Link from "next/link";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 
-// Featured properties — placeholder set, real listings replace once supplied.
+// Featured properties — reflects Jennifer's actual transactional footprint
+// confirmed by Skywalker 2026-05-17 (Rundog Real Estate Group): multi-million
+// closing in Dripping Springs, active luxury lot in South Austin / 78704,
+// Lakeway / Bee Cave townhomes. Generic Westlake / Tarrytown placeholders
+// retained until real listing photos + addresses supplied.
 const FEATURED = [
-  { id: "westlake-ridge",      status: "Coming Soon", title: "Westlake Ridgeline Estate",       price: "Price upon request", area: "Westlake" },
-  { id: "tarrytown-classic",   status: "Just Listed", title: "Tarrytown Classic on Heritage Lot", price: "$5,400,000",        area: "Tarrytown" },
-  { id: "lake-waterfront",     status: "For Sale",    title: "Lake Austin Waterfront",            price: "$8,250,000",        area: "Lake Austin" },
-  { id: "barton-creek",        status: "For Sale",    title: "Barton Creek Course-Front",          price: "$4,100,000",        area: "Barton Creek" },
-  { id: "dripping-springs",    status: "Off-Market",  title: "Hill Country Estate, Dripping Springs", price: "Inquire privately", area: "Dripping Springs" },
-  { id: "tarrytown-villa",     status: "Off-Market",  title: "Tarrytown Villa, Walled Garden",     price: "Inquire privately", area: "Tarrytown" },
+  { id: "dripping-springs-estate", status: "Recently Sold", title: "Hill Country Estate, Dripping Springs", price: "Sold · Multi-million",   area: "Dripping Springs" },
+  { id: "south-austin-lot",        status: "For Sale",      title: "Luxury Build Lot — 78704",              price: "Price upon request",       area: "South Austin · 78704" },
+  { id: "lakeway-townhome",        status: "Active",        title: "Modern Townhome, Lakeway",              price: "Price upon request",       area: "Lakeway" },
+  { id: "westlake-ridge",          status: "Coming Soon",   title: "Westlake Ridgeline Estate",             price: "Price upon request",       area: "Westlake" },
+  { id: "tarrytown-classic",       status: "Just Listed",   title: "Tarrytown Classic on Heritage Lot",     price: "$5,400,000",                area: "Tarrytown" },
+  { id: "bee-cave-townhome",       status: "Off-Market",    title: "Bee Cave Townhome — Walled Garden",     price: "Inquire privately",         area: "Bee Cave" },
 ] as const;
 
 const STATUS_BADGE: Record<string, string> = {
-  "Coming Soon": "bg-[#c9a877]/15 text-[#c9a877] border-[#c9a877]/35",
-  "Just Listed": "bg-[#faf6f0] text-[#1a1716] border-[#1a1716]/35",
-  "For Sale":    "bg-[#1a1716] text-[#faf6f0] border-[#1a1716]",
-  "Off-Market":  "bg-transparent text-[#faf6f0]/80 border-[#faf6f0]/35",
+  "Coming Soon":   "bg-[#c9a877]/15 text-[#c9a877] border-[#c9a877]/35",
+  "Just Listed":   "bg-[#faf6f0] text-[#1a1716] border-[#1a1716]/35",
+  "For Sale":      "bg-[#1a1716] text-[#faf6f0] border-[#1a1716]",
+  "Active":        "bg-[#c9a877] text-[#1a1716] border-[#c9a877]",
+  "Off-Market":    "bg-transparent text-[#faf6f0]/80 border-[#faf6f0]/35",
+  "Recently Sold": "bg-[#1a1716]/90 text-[#c9a877] border-[#c9a877]/60",
 };
 
 // Testimonials — placeholder set, real client quotes replace later.
@@ -53,20 +59,21 @@ export default function Home() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_50%,transparent_30%,rgba(0,0,0,0.45)_100%)]" />
         <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 pt-32 lg:pt-44 pb-20 min-h-[92svh] flex flex-col justify-between">
           <div className="max-w-5xl">
-            <p className="font-serif italic text-xs tracking-[0.28em] uppercase text-[#c9a877] mb-8">Luxury Real Estate · Austin, Texas</p>
+            <p className="font-serif italic text-xs tracking-[0.28em] uppercase text-[#c9a877] mb-8">Westlake · Tarrytown · Lakeway</p>
             <h1 className="display text-[#faf6f0] text-[14vw] sm:text-[10vw] lg:text-[8.5vw] xl:text-[148px] leading-[0.92]">
-              Quiet <em>presence,</em><br />enduring <em>value.</em>
+              Bespoke Real Estate<br />
+              <em className="italic">Without Compromise.</em>
             </h1>
             <p className="editorial text-[#faf6f0]/85 text-xl lg:text-2xl max-w-2xl mt-10 leading-relaxed">
-              A deliberate practice in Austin's most considered enclaves — representing the buyers and sellers who measure success in privacy, craftsmanship, and patience.
+              Discreet, white-glove representation for discerning buyers and sellers navigating Austin's most exclusive residential markets — from Westlake ridgelines to Lake Travis waterfront and the Dripping Springs hill country.
             </p>
           </div>
           <div className="flex flex-wrap gap-4 mt-12">
-            <Link href="/listings" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#c9a877] text-[#1a1716] text-[11.5px] tracking-[0.2em] uppercase font-semibold hover:bg-[#faf6f0] transition-colors">
-              Featured Properties <span aria-hidden>→</span>
+            <Link href="/buy" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#c9a877] text-[#1a1716] text-[11.5px] tracking-[0.2em] uppercase font-semibold hover:bg-[#faf6f0] transition-colors">
+              Explore Private Exclusives <span aria-hidden>→</span>
             </Link>
-            <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-[#faf6f0]/60 text-[#faf6f0] text-[11.5px] tracking-[0.2em] uppercase font-medium hover:bg-[#faf6f0]/10 transition-colors">
-              Contact Us <span aria-hidden>→</span>
+            <Link href="/sell" className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-[#faf6f0]/60 text-[#faf6f0] text-[11.5px] tracking-[0.2em] uppercase font-medium hover:bg-[#faf6f0]/10 transition-colors">
+              Request Private Valuation <span aria-hidden>→</span>
             </Link>
           </div>
         </div>

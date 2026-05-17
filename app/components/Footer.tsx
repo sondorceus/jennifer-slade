@@ -1,13 +1,15 @@
 import Link from "next/link";
 
-// TODO: replace BROKER_INFO with real values once confirmed with Skywalker.
 // TREC compliance: every page footer must display:
 //   - link to TREC Information About Brokerage Services (IABS) form
 //   - link to TREC Consumer Protection Notice
 //   - brokerage name + logo
 //   - agent's TREC license number
+// Brokerage confirmed by Skywalker 2026-05-17: Rundog Real Estate Group,
+// 401 Congress Ave, Austin. Agent license # still TBD.
 const BROKER_INFO = {
-  name: "[Brokerage Name TBD]",
+  name: "Rundog Real Estate Group",
+  brokerAddress: "401 Congress Ave, Austin, TX 78701",
   agentLicense: "[TREC #TBD]",
   iabsUrl: "https://www.trec.texas.gov/sites/default/files/pdf-forms/IABS%201-0.pdf",
   consumerNoticeUrl: "https://www.trec.texas.gov/sites/default/files/pdf-forms/CN%201-4.pdf",
@@ -40,7 +42,7 @@ export default function Footer() {
             <ul className="space-y-3 text-[15px] text-[#faf6f0]/85">
               <li>[Email TBD]</li>
               <li>[Phone TBD]</li>
-              <li>Austin, Texas</li>
+              <li>{BROKER_INFO.brokerAddress}</li>
             </ul>
           </div>
         </div>
