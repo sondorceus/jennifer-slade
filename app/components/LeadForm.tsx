@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Reusable lead form for every Jennifer Slade entry point.
 // Variants tune the visible fields + submit-button label without
@@ -34,6 +34,17 @@ export default function LeadForm({
   const [budget, setBudget] = useState("");
   const [note, setNote] = useState("");
   const [status, setStatus] = useState<{ loading: boolean; success?: string; error?: string }>({ loading: false });
+
+  // Auto-populate the note field from a ?subject= query param (CTA
+  // dynamic routing per Skywalker 2026-05-17). Makes "Inquire" or
+  // "Tour" clicks on listing cards arrive at /contact with the
+  // property already named in the message. Reads window.location
+  // directly to avoid the useSearchParams Suspense requirement.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const subj = new URLSearchParams(window.location.search).get("subject");
+    if (subj) setNote((prev) => prev || subj);
+  }, []);
 
   const showAddress      = variant === "valuation";
   const showNeighborhood = variant === "buyer-access";

@@ -28,16 +28,49 @@ type Props = {
   meta?: string;
   desc?: string;
   images?: string[];
+  /** Structured spec fields — render in a unified Specs Bar per Skywalker
+   *  2026-05-17. Provide whichever apply (lots only have acres+area). */
+  beds?: number;
+  baths?: number;
+  sqft?: number;
+  acres?: number;
+  /** Short region label for the specs bar, e.g. "LAKEWAY, TX". Falls back
+   *  to area if not set. */
+  regionLabel?: string;
   /** Compact rendering for the Home Featured grid (skips the long desc text). */
   compact?: boolean;
 };
 
+// Renders the canonical specs bar — "3 BDS | 2 BA | 1,903 SQFT | LAKEWAY, TX"
+// or for land: "0.23 ACRES | HORSESHOE BAY, TX". Skips any unset field.
+function SpecsBar({ beds, baths, sqft, acres, regionLabel }: { beds?: number; baths?: number; sqft?: number; acres?: number; regionLabel: string }) {
+  const parts: string[] = [];
+  if (beds  != null) parts.push(`${beds} BDS`);
+  if (baths != null) parts.push(`${baths} BA`);
+  if (sqft  != null) parts.push(`${sqft.toLocaleString()} SQFT`);
+  if (acres != null) parts.push(`${acres} ACRES`);
+  parts.push(regionLabel);
+  return (
+    <p className="text-[11px] tracking-[0.18em] uppercase font-semibold text-[#1a1716]/65 mt-2">
+      {parts.join(" · ")}
+    </p>
+  );
+}
+
 export default function ListingCard({
-  title, area, price, status, meta, desc, images, compact = false,
+  title, area, price, status, meta, desc, images,
+  beds, baths, sqft, acres, regionLabel,
+  compact = false,
 }: Props) {
   const [open, setOpen] = useState(false);
   const hasImages = !!(images && images.length > 0);
   const trigger = () => setOpen(true);
+  const specsRegion = (regionLabel || area).toUpperCase();
+  const hasSpecs = beds != null || baths != null || sqft != null || acres != null;
+  // Pre-populate the contact form subject when an inquiry comes from a
+  // specific card — feels like a bespoke white-glove response per
+  // Skywalker 2026-05-17 dynamic-routing note.
+  const inquireHref = `/contact?subject=${encodeURIComponent(`Inquiry regarding ${title}`)}`;
 
   return (
     <>
@@ -72,13 +105,17 @@ export default function ListingCard({
 
         {compact ? (
           <>
-            <p
+            <h3
               onClick={trigger}
               className="font-serif text-xl text-[#1a1716] tracking-normal leading-tight cursor-pointer hover:text-[#3a2f23] transition-colors"
             >
               {title}
-            </p>
-            <p className="text-[11px] tracking-[0.16em] uppercase text-[#1a1716]/55 mt-1">{area}</p>
+            </h3>
+            {hasSpecs ? (
+              <SpecsBar beds={beds} baths={baths} sqft={sqft} acres={acres} regionLabel={specsRegion} />
+            ) : (
+              <p className="text-[11px] tracking-[0.18em] uppercase font-semibold text-[#1a1716]/65 mt-2">{specsRegion}</p>
+            )}
             <div className="flex items-center justify-between mt-3">
               <p className="font-serif text-lg text-[#c9a877]">{price}</p>
               <button
@@ -92,23 +129,35 @@ export default function ListingCard({
           </>
         ) : (
           <>
-            <p className="text-[11px] tracking-[0.16em] uppercase text-[#1a1716]/55 mb-1">{area}</p>
             <h3
               onClick={trigger}
               className="font-serif text-2xl text-[#1a1716] tracking-normal leading-tight cursor-pointer hover:text-[#3a2f23] transition-colors"
             >
               {title}
             </h3>
-            <p className="font-serif text-xl text-[#c9a877] mt-2">{price}</p>
+            {hasSpecs ? (
+              <SpecsBar beds={beds} baths={baths} sqft={sqft} acres={acres} regionLabel={specsRegion} />
+            ) : (
+              <p className="text-[11px] tracking-[0.18em] uppercase font-semibold text-[#1a1716]/65 mt-2">{specsRegion}</p>
+            )}
+            <p className="font-serif text-xl text-[#c9a877] mt-3">{price}</p>
             {meta && <p className="text-[12.5px] tracking-[0.06em] text-[#1a1716]/60 mt-2">{meta}</p>}
             {desc && <p className="editorial text-[15px] text-[#1a1716]/70 mt-4 leading-relaxed">{desc}</p>}
-            <button
-              type="button"
-              onClick={trigger}
-              className="link-anim inline-block mt-5 text-[11px] tracking-[0.2em] uppercase font-semibold text-[#1a1716]"
-            >
-              Open Details →
-            </button>
+            <div className="flex flex-wrap gap-5 mt-5">
+              <button
+                type="button"
+                onClick={trigger}
+                className="link-anim text-[11px] tracking-[0.2em] uppercase font-semibold text-[#1a1716]"
+              >
+                Open Details →
+              </button>
+              <a
+                href={inquireHref}
+                className="link-anim text-[11px] tracking-[0.2em] uppercase font-semibold text-[#c9a877]"
+              >
+                Inquire →
+              </a>
+            </div>
           </>
         )}
       </article>

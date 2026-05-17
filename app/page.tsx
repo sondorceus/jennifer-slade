@@ -18,6 +18,12 @@ type Featured = {
   desc?: string;
   /** Full photo array — first image is the hero. Carousel auto-cycles. */
   images?: string[];
+  /** Structured specs for the canonical Specs Bar. */
+  beds?: number;
+  baths?: number;
+  sqft?: number;
+  acres?: number;
+  regionLabel?: string;
 };
 
 // Honey Creek — the full 50-photo professional gallery delivered by
@@ -36,7 +42,9 @@ const FEATURED: Featured[] = [
     title: "2904 Westhill Dr, Austin",
     price: "$3,190,000",
     area: "South Austin · 78704",
-    meta: "5 bed · 4.5 bath · 3,530 sqft · 0.21 ac · Built 2025 · MLS 2682180",
+    regionLabel: "Austin, TX 78704",
+    beds: 5, baths: 4.5, sqft: 3530, acres: 0.21,
+    meta: "Built 2025 · MLS 2682180",
     desc: "Modern luxury new build in the heart of Austin's 78704. A 5-bedroom, 4.5-bathroom masterpiece blending architectural sophistication with everyday comfort. Chef's kitchen with 54\" SubZero, Wolf 48\" gas cooktop with separate double oven, quartz waterfall island, and a walk-through pantry with a second sink, fridge, and dishwasher. Double-sided fireplace, main-level primary suite with a balcony built-in outdoor kitchen overlooking the pool, wraparound putting green, and outdoor fireplace. Second-level living + three bedrooms. Lower level with private entrance — home office, guest retreat, or game room with full bath and direct pool access. Owner will consider owner-finance options.",
     images: WESTHILL_PHOTOS,
   },
@@ -46,7 +54,9 @@ const FEATURED: Featured[] = [
     title: "211 Honey Creek Ct #6, Lakeway",
     price: "$799,900",
     area: "Lakeway · 78738",
-    meta: "3 bed · 2.5 bath · 1,903 sqft · MLS 1754607",
+    regionLabel: "Lakeway, TX 78738",
+    beds: 3, baths: 2.5, sqft: 1903,
+    meta: "MLS 1754607",
     desc: "Santa Barbara-style free-standing residence sitting between two peaceful valleys in a coveted Lakeway enclave — panoramic canyon views and lock-and-leave living. One of just 30 homes in an exclusive two-street community, with vaulted ceilings, his-and-her showers, and a professionally landscaped fully fenced backyard. Four minutes to H-E-B, ten to the Hill Country Galleria.",
     images: HONEY_CREEK_PHOTOS,
   },
@@ -56,6 +66,7 @@ const FEATURED: Featured[] = [
     title: "Hill Country Luxury Estate",
     price: "Sold · $2,350,000",
     area: "Dripping Springs",
+    regionLabel: "Dripping Springs, TX",
     meta: "Verified Homes.com closing record",
     desc: "Multi-million dollar Dripping Springs closing — representative of Jennifer's track record on hill-country acreage and architectural-luxury transactions.",
   },
@@ -65,6 +76,8 @@ const FEATURED: Featured[] = [
     title: "Miss Kitty — Build Lot Acreage",
     price: "Inquire",
     area: "Horseshoe Bay",
+    regionLabel: "Horseshoe Bay, TX",
+    acres: 0.5,
     meta: "Active land asset · HAR-listed",
     desc: "Build-ready acreage in the Horseshoe Bay lake-country corridor. Western frontage, hill-country views, owner-builder ready.",
   },
@@ -74,6 +87,8 @@ const FEATURED: Featured[] = [
     title: "Gunsmoke — Build Lot Acreage",
     price: "Inquire",
     area: "Horseshoe Bay",
+    regionLabel: "Horseshoe Bay, TX",
+    acres: 0.5,
     meta: "Active land asset · HAR-listed",
     desc: "Adjacent build-ready acreage with similar elevation, view orientation, and proximity to Lake LBJ.",
   },
@@ -83,6 +98,7 @@ const FEATURED: Featured[] = [
     title: "Westlake Ridgeline Estate",
     price: "Price upon request",
     area: "Westlake",
+    regionLabel: "Westlake, TX",
     meta: "Specs available on inquiry",
     desc: "Representative Westlake ridgeline opportunity — architecture, view orientation, and lifestyle narrative on inquiry.",
   },
@@ -92,6 +108,7 @@ const FEATURED: Featured[] = [
     title: "Tarrytown Classic — Heritage Lot",
     price: "Inquire privately",
     area: "Tarrytown",
+    regionLabel: "Tarrytown, TX",
     meta: "Quiet listing · by referral",
     desc: "Mediterranean-revival vernacular on a Tarrytown heritage lot — discussed privately with qualified buyers under NDA.",
   },
@@ -231,6 +248,11 @@ export default function Home() {
                       meta={p.meta}
                       desc={p.desc}
                       images={p.images}
+                      beds={p.beds}
+                      baths={p.baths}
+                      sqft={p.sqft}
+                      acres={p.acres}
+                      regionLabel={p.regionLabel}
                       compact
                     />
                   ))}

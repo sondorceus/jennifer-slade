@@ -13,6 +13,11 @@ export type BrowserListing = {
   meta: string;
   desc: string;
   images?: string[];
+  beds?: number;
+  baths?: number;
+  sqft?: number;
+  acres?: number;
+  regionLabel?: string;
 };
 
 // Three luxury-real-estate sections, ordered for narrative flow.
@@ -38,29 +43,32 @@ export default function ListingsBrowser({ listings }: Props) {
 
   return (
     <div className="space-y-16 lg:space-y-24">
-      {/* Region filter — mobile-safe layout: dedicated row, eyebrow on
-          its own line on small screens, pills can wrap freely without
-          crashing into the next section. */}
+      {/* Region filter — mobile: clean horizontal swipe row, no wrap,
+          edge-fade indicates more pills off-screen. Desktop: flex-wrap. */}
       <div className="pb-2">
         <p className="eyebrow text-[#8d6f4f] mb-3">Region</p>
-        <div className="flex flex-wrap items-center gap-2 lg:gap-3">
-          {regions.map((r) => {
-            const active = r === region;
-            return (
-              <button
-                key={r}
-                type="button"
-                onClick={() => setRegion(r)}
-                className={`px-4 py-1.5 rounded-full text-[11px] tracking-[0.2em] uppercase font-medium border transition-colors ${
-                  active
-                    ? "bg-[#1a1716] text-[#faf6f0] border-[#1a1716]"
-                    : "bg-transparent text-[#1a1716]/75 border-[#1a1716]/30 hover:border-[#1a1716] hover:text-[#1a1716]"
-                }`}
-              >
-                {r}
-              </button>
-            );
-          })}
+        <div className="relative -mx-6 lg:mx-0">
+          <div className="flex items-center gap-2 lg:gap-3 px-6 lg:px-0 overflow-x-auto lg:overflow-visible lg:flex-wrap pb-2 lg:pb-0 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            {regions.map((r) => {
+              const active = r === region;
+              return (
+                <button
+                  key={r}
+                  type="button"
+                  onClick={() => setRegion(r)}
+                  className={`shrink-0 px-4 py-1.5 rounded-full text-[11px] tracking-[0.2em] uppercase font-medium border transition-all duration-500 ${
+                    active
+                      ? "bg-[#1a1716] text-[#faf6f0] border-[#1a1716]"
+                      : "bg-transparent text-[#1a1716]/75 border-[#1a1716]/30 hover:border-[#1a1716] hover:text-[#1a1716]"
+                  }`}
+                >
+                  {r}
+                </button>
+              );
+            })}
+          </div>
+          {/* Right-edge fade hint on mobile so users know to swipe */}
+          <div className="lg:hidden absolute right-0 top-0 bottom-2 w-12 bg-gradient-to-l from-[#faf6f0] to-transparent pointer-events-none" />
         </div>
       </div>
 
@@ -94,6 +102,11 @@ export default function ListingsBrowser({ listings }: Props) {
                   meta={l.meta}
                   desc={l.desc}
                   images={l.images}
+                  beds={l.beds}
+                  baths={l.baths}
+                  sqft={l.sqft}
+                  acres={l.acres}
+                  regionLabel={l.regionLabel}
                 />
               ))}
             </div>

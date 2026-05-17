@@ -98,14 +98,16 @@ export default function ListingDetailModal({
             )}
 
             <div className="mt-10 pt-8 border-t border-[#1a1716]/15 space-y-3">
+              {/* Pre-populate the contact form subject so the inquiry
+                  feels white-glove on landing (Skywalker 2026-05-17). */}
               <a
-                href="/contact"
+                href={`/contact?subject=${encodeURIComponent(`Tour request — ${title}`)}`}
                 className="block w-full text-center px-7 py-4 rounded-full bg-[#1a1716] text-[#faf6f0] text-[11.5px] tracking-[0.2em] uppercase font-medium hover:bg-[#3a2f23] transition-colors"
               >
                 Request Private Tour →
               </a>
               <a
-                href="/contact"
+                href={`/contact?subject=${encodeURIComponent(`Inquiry regarding ${title}`)}`}
                 className="block w-full text-center px-7 py-4 rounded-full border border-[#1a1716] text-[#1a1716] text-[11.5px] tracking-[0.2em] uppercase font-medium hover:bg-[#1a1716] hover:text-[#faf6f0] transition-colors"
               >
                 Inquire →
