@@ -130,14 +130,31 @@ export default function Home() {
           }}
         />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_50%,transparent_30%,rgba(0,0,0,0.45)_100%)]" />
-        <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 pt-32 lg:pt-44 pb-20 min-h-[92svh] flex flex-col justify-between">
-          <div className="max-w-5xl">
+        {/* Jennifer's portrait positioned right side on desktop — uses
+            a top-fade + side-fade mask so the white background of the
+            photo blends seamlessly into the dark cinematic hero. The
+            agent appears to emerge from the scene rather than being
+            pasted on top. Hidden on small mobile to keep the headline
+            real estate. */}
+        <img
+          src="/jennifer-slade.jpg"
+          alt="Jennifer Slade"
+          className="hidden md:block absolute right-0 bottom-0 h-[90%] lg:h-[95%] w-auto z-[5] pointer-events-none select-none object-contain object-bottom"
+          style={{
+            WebkitMaskImage:
+              "radial-gradient(ellipse 75% 90% at 60% 65%, rgba(0,0,0,1) 35%, rgba(0,0,0,0.85) 55%, transparent 95%)",
+            maskImage:
+              "radial-gradient(ellipse 75% 90% at 60% 65%, rgba(0,0,0,1) 35%, rgba(0,0,0,0.85) 55%, transparent 95%)",
+          }}
+        />
+        <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 pt-32 lg:pt-44 pb-20 min-h-[92svh] flex flex-col justify-between z-10">
+          <div className="max-w-2xl lg:max-w-3xl">
             <p className="font-serif italic text-xs tracking-[0.28em] uppercase text-[#c9a877] mb-8">Westlake · Tarrytown · Lakeway</p>
-            <h1 className="display text-[#faf6f0] text-[14vw] sm:text-[10vw] lg:text-[8.5vw] xl:text-[148px] leading-[0.92]">
+            <h1 className="display text-[#faf6f0] text-[14vw] sm:text-[10vw] lg:text-[7.5vw] xl:text-[120px] leading-[0.92]">
               Bespoke Real Estate<br />
               <em className="italic">Without Compromise.</em>
             </h1>
-            <p className="editorial text-[#faf6f0]/85 text-xl lg:text-2xl max-w-2xl mt-10 leading-relaxed">
+            <p className="editorial text-[#faf6f0]/85 text-lg lg:text-xl max-w-xl mt-8 leading-relaxed">
               Discreet, white-glove representation for discerning buyers and sellers navigating Austin's most exclusive residential markets — from Westlake ridgelines to Lake Travis waterfront and the Dripping Springs hill country.
             </p>
           </div>
@@ -224,29 +241,30 @@ export default function Home() {
         </div>
       </section>
 
-      {/* AGENT BRAND — editorial bio + portrait. Sits below Featured
-          Properties per Skywalker's 2026-05-17 flow: hero -> proof ->
-          inventory -> the person who handles it. */}
-      <section className="bg-[#1a1716] text-[#faf6f0] py-24 lg:py-36 px-6 lg:px-12">
+      {/* AGENT BRAND — editorial bio + portrait. Moved to a CREAM band
+          on 2026-05-17 per Skywalker bug report: the portrait's white
+          background was crashing into the dark band edge. Cream merges
+          naturally with the photo background. */}
+      <section className="bg-[#faf6f0] py-24 lg:py-36 px-6 lg:px-12">
         <div className="max-w-[1300px] mx-auto grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           <div className="lg:col-span-5">
-            {/* Portrait — Jennifer's editorial headshot. Slight overflow
-                vignette behind to keep her isolated from the dark band. */}
+            {/* Portrait — Jennifer's editorial headshot, sized as a
+                portrait card. Soft warm shadow underneath grounds it. */}
             <div className="relative">
-              <div className="absolute -inset-4 bg-[radial-gradient(ellipse_75%_60%_at_50%_45%,rgba(201,168,119,0.18),transparent_65%)] blur-2xl" />
+              <div className="absolute -inset-2 bg-[radial-gradient(ellipse_75%_60%_at_50%_55%,rgba(201,168,119,0.20),transparent_70%)] blur-2xl" />
               <img
                 src="/jennifer-slade.jpg"
                 alt="Jennifer Slade — Luxury Real Estate, Austin"
-                className="relative w-full max-w-[440px] mx-auto aspect-[4/5] object-cover rounded-sm"
+                className="relative w-full max-w-[480px] mx-auto aspect-[4/5] object-cover rounded-md shadow-[0_30px_60px_-25px_rgba(60,40,20,0.35)]"
               />
             </div>
           </div>
           <div className="lg:col-span-7">
-            <p className="eyebrow text-[#c9a877] mb-5">The Agent</p>
-            <h2 className="display text-[#faf6f0] text-4xl sm:text-5xl lg:text-6xl leading-[1.08] max-w-2xl">
+            <p className="eyebrow text-[#8d6f4f] mb-5">The Agent</p>
+            <h2 className="display text-[#1a1716] text-4xl sm:text-5xl lg:text-6xl leading-[1.08] max-w-2xl">
               Representation built on <em className="italic">privacy, craft, and a small roster.</em>
             </h2>
-            <div className="editorial text-lg text-[#faf6f0]/85 leading-relaxed space-y-5 mt-8 max-w-2xl">
+            <div className="editorial text-lg text-[#1a1716]/80 leading-relaxed space-y-5 mt-8 max-w-2xl">
               <p>
                 Jennifer Slade represents high-end buyers and sellers across Austin's most considered enclaves —
                 Westlake, Tarrytown, Lakeway, Barton Creek, and the Dripping Springs hill country. Her practice
@@ -259,10 +277,10 @@ export default function Home() {
               </p>
             </div>
             <div className="flex flex-wrap gap-4 mt-10">
-              <Link href="/about" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#c9a877] text-[#1a1716] text-[11.5px] tracking-[0.2em] uppercase font-semibold hover:bg-[#faf6f0] transition-colors">
+              <Link href="/about" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#1a1716] text-[#faf6f0] text-[11.5px] tracking-[0.2em] uppercase font-semibold hover:bg-[#3a2f23] transition-colors">
                 Full Biography <span aria-hidden>→</span>
               </Link>
-              <Link href="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[#faf6f0]/60 text-[#faf6f0] text-[11.5px] tracking-[0.2em] uppercase font-medium hover:bg-[#faf6f0]/10 transition-colors">
+              <Link href="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[#1a1716] text-[#1a1716] text-[11.5px] tracking-[0.2em] uppercase font-medium hover:bg-[#1a1716] hover:text-[#faf6f0] transition-colors">
                 Begin a Quiet Conversation <span aria-hidden>→</span>
               </Link>
             </div>
