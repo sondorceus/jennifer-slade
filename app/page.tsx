@@ -117,27 +117,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section className="bg-[#1a1716] text-[#faf6f0] py-24 lg:py-32 px-6 lg:px-12">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="flex items-end justify-between mb-14 flex-wrap gap-6">
-            <div>
-              <p className="eyebrow text-[#c9a877] mb-4">In their words</p>
-              <h2 className="display text-[#faf6f0] text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">Client <em>testimonials.</em></h2>
-            </div>
-            <Link href="/testimonials" className="link-anim text-[11.5px] tracking-[0.2em] uppercase text-[#c9a877]">View All <span aria-hidden>→</span></Link>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6 lg:gap-8">
-            {TESTIMONIALS.map((t, i) => (
-              <article key={i} className="border border-[#faf6f0]/15 rounded-sm p-8 lg:p-10 hover:border-[#c9a877]/50 transition-colors">
-                <p className="font-serif text-2xl lg:text-3xl text-[#faf6f0] leading-[1.3] mb-6">"{t.quote}"</p>
-                <p className="text-[11.5px] tracking-[0.2em] uppercase text-[#c9a877]/85">{t.author}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* FEATURED PROPERTIES */}
       <section className="bg-[#faf6f0] py-24 lg:py-32 px-6 lg:px-12">
         <div className="max-w-[1400px] mx-auto">
@@ -235,6 +214,29 @@ export default function Home() {
                 <p className="text-[10px] tracking-[0.22em] uppercase font-semibold text-[#c9a877] mb-3">{a.tag}</p>
                 <h3 className="font-serif text-2xl text-[#1a1716] leading-tight">{a.title}</h3>
                 <p className="text-[12.5px] tracking-[0.14em] uppercase text-[#1a1716]/55 mt-4">{a.date}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS — moved to bottom per Skywalker 2026-05-17.
+          Closing social-proof note, just above the footer, rather than
+          interrupting the narrative flow mid-page. */}
+      <section className="bg-[#1a1716] text-[#faf6f0] py-24 lg:py-32 px-6 lg:px-12">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="flex items-end justify-between mb-14 flex-wrap gap-6">
+            <div>
+              <p className="eyebrow text-[#c9a877] mb-4">In their words</p>
+              <h2 className="display text-[#faf6f0] text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">Client <em>testimonials.</em></h2>
+            </div>
+            <Link href="/testimonials" className="link-anim text-[11.5px] tracking-[0.2em] uppercase text-[#c9a877]">View All <span aria-hidden>→</span></Link>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6 lg:gap-8">
+            {TESTIMONIALS.map((t, i) => (
+              <article key={i} className="border border-[#faf6f0]/15 rounded-sm p-8 lg:p-10 hover:border-[#c9a877]/50 transition-colors">
+                <p className="font-serif text-2xl lg:text-3xl text-[#faf6f0] leading-[1.3] mb-6">"{t.quote}"</p>
+                <p className="text-[11.5px] tracking-[0.2em] uppercase text-[#c9a877]/85">{t.author}</p>
               </article>
             ))}
           </div>
