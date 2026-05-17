@@ -301,20 +301,22 @@ export default function Home() {
                     View All <span aria-hidden>→</span>
                   </Link>
                 </div>
-                {/* Quick-scroll menu — one-card-per-page on mobile with
-                    ZERO peek. Each slot is exactly 100vw with the card
-                    breathing room as internal padding; no inter-card
-                    gap on mobile means the next card cannot leak in.
-                    Snap-center anchors each card precisely. Desktop
-                    reverts to a 3-column grid since all cards fit. */}
-                <div className="-mx-6 lg:mx-0">
+                {/* Quick-scroll menu — card sized so the next card hints
+                    at the right edge with a soft cream feather (designed
+                    "more this way" affordance, not a cutoff). Skywalker
+                    2026-05-17: "I loved the white that was shadowing".
+                    Math at scroll=0: card1 = 100vw - 4rem (64px), gap-3
+                    = 12px, leaves a 28px sliver of card2 on the right
+                    which the 64px cream-fade overlay dissolves into the
+                    page background — luxury teaser, not bug. */}
+                <div className="relative -mx-6 lg:mx-0">
                   <div
-                    className="flex lg:gap-6 lg:px-0 overflow-x-auto pb-2 lg:pb-0 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                    className="flex gap-3 lg:gap-6 px-6 lg:px-0 overflow-x-auto pb-2 lg:pb-0 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
                   >
                     {items.map((p) => (
                       <div
                         key={p.id}
-                        className="shrink-0 w-screen px-6 snap-center snap-always lg:w-[31%] lg:px-0"
+                        className="shrink-0 w-[calc(100vw-4rem)] sm:w-[48%] lg:w-[31%] snap-start snap-always"
                       >
                         <ListingCard
                           id={p.id}
@@ -335,9 +337,16 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
+                  {/* Cream edge-fade — feathers the trailing card sliver
+                      into the page bg so it reads as a designed teaser,
+                      not a cutoff. Mobile-only; desktop grid doesn't
+                      need it since all cards fit. */}
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute top-0 bottom-2 right-0 w-16 lg:hidden bg-gradient-to-l from-[#faf6f0] via-[#faf6f0]/90 to-transparent"
+                  />
                   {/* Dot indicator — mobile only (lg+ has grid view).
-                      Shows total count + "swipe for more" affordance
-                      without needing a card peek that reads as cut-off. */}
+                      Shows total count + "swipe for more" affordance. */}
                   {items.length > 1 && (
                     <div className="flex items-center justify-center gap-2 mt-6 lg:hidden">
                       {items.map((_, i) => (
