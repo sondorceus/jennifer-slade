@@ -2,7 +2,7 @@ import Link from "next/link";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import LeadForm from "./components/LeadForm";
-import ListingCarousel from "./components/ListingCarousel";
+import ListingCard from "./components/ListingCard";
 
 // Featured properties — reflects Jennifer's verified transactional footprint
 // per Skywalker 2026-05-17 (Homes.com, HAR, Unlock MLS, Kuper Sotheby cross-
@@ -14,6 +14,8 @@ type Featured = {
   title: string;
   price: string;
   area: string;
+  meta?: string;
+  desc?: string;
   /** Full photo array — first image is the hero. Carousel auto-cycles. */
   images?: string[];
 };
@@ -27,22 +29,62 @@ type Featured = {
 const HONEY_CREEK_PHOTOS = Array.from({ length: 50 }, (_, i) => `/listings/honey-creek-${i + 1}.jpg`);
 
 const FEATURED: Featured[] = [
-  { id: "honey-creek-lakeway",   status: "Active",        title: "211 Honey Creek Ct #6, Lakeway",    price: "$799,900",          area: "Lakeway · 78738", images: HONEY_CREEK_PHOTOS },
-  { id: "dripping-springs-sold", status: "Recently Sold", title: "Hill Country Luxury Estate",        price: "Sold · $2,350,000", area: "Dripping Springs" },
-  { id: "miss-kitty-horseshoe",  status: "Active",        title: "Miss Kitty — Build Lot Acreage",    price: "Inquire",           area: "Horseshoe Bay" },
-  { id: "gunsmoke-horseshoe",    status: "Active",        title: "Gunsmoke — Build Lot Acreage",      price: "Inquire",           area: "Horseshoe Bay" },
-  { id: "westlake-ridge",        status: "Coming Soon",   title: "Westlake Ridgeline Estate",         price: "Price upon request", area: "Westlake" },
-  { id: "tarrytown-classic",     status: "Off-Market",    title: "Tarrytown Classic — Heritage Lot",  price: "Inquire privately", area: "Tarrytown" },
+  {
+    id: "honey-creek-lakeway",
+    status: "Active",
+    title: "211 Honey Creek Ct #6, Lakeway",
+    price: "$799,900",
+    area: "Lakeway · 78738",
+    meta: "3 bed · 2.5 bath · 1,903 sqft · MLS 1754607",
+    desc: "Santa Barbara-style free-standing residence sitting between two peaceful valleys in a coveted Lakeway enclave — panoramic canyon views and lock-and-leave living. One of just 30 homes in an exclusive two-street community, with vaulted ceilings, his-and-her showers, and a professionally landscaped fully fenced backyard. Four minutes to H-E-B, ten to the Hill Country Galleria.",
+    images: HONEY_CREEK_PHOTOS,
+  },
+  {
+    id: "dripping-springs-sold",
+    status: "Recently Sold",
+    title: "Hill Country Luxury Estate",
+    price: "Sold · $2,350,000",
+    area: "Dripping Springs",
+    meta: "Verified Homes.com closing record",
+    desc: "Multi-million dollar Dripping Springs closing — representative of Jennifer's track record on hill-country acreage and architectural-luxury transactions.",
+  },
+  {
+    id: "miss-kitty-horseshoe",
+    status: "Active",
+    title: "Miss Kitty — Build Lot Acreage",
+    price: "Inquire",
+    area: "Horseshoe Bay",
+    meta: "Active land asset · HAR-listed",
+    desc: "Build-ready acreage in the Horseshoe Bay lake-country corridor. Western frontage, hill-country views, owner-builder ready.",
+  },
+  {
+    id: "gunsmoke-horseshoe",
+    status: "Active",
+    title: "Gunsmoke — Build Lot Acreage",
+    price: "Inquire",
+    area: "Horseshoe Bay",
+    meta: "Active land asset · HAR-listed",
+    desc: "Adjacent build-ready acreage with similar elevation, view orientation, and proximity to Lake LBJ.",
+  },
+  {
+    id: "westlake-ridge",
+    status: "Coming Soon",
+    title: "Westlake Ridgeline Estate",
+    price: "Price upon request",
+    area: "Westlake",
+    meta: "Specs available on inquiry",
+    desc: "Representative Westlake ridgeline opportunity — architecture, view orientation, and lifestyle narrative on inquiry.",
+  },
+  {
+    id: "tarrytown-classic",
+    status: "Off-Market",
+    title: "Tarrytown Classic — Heritage Lot",
+    price: "Inquire privately",
+    area: "Tarrytown",
+    meta: "Quiet listing · by referral",
+    desc: "Mediterranean-revival vernacular on a Tarrytown heritage lot — discussed privately with qualified buyers under NDA.",
+  },
 ];
-
-const STATUS_BADGE: Record<string, string> = {
-  "Coming Soon":   "bg-[#c9a877]/15 text-[#c9a877] border-[#c9a877]/35",
-  "Just Listed":   "bg-[#faf6f0] text-[#1a1716] border-[#1a1716]/35",
-  "For Sale":      "bg-[#1a1716] text-[#faf6f0] border-[#1a1716]",
-  "Active":        "bg-[#c9a877] text-[#1a1716] border-[#c9a877]",
-  "Off-Market":    "bg-transparent text-[#faf6f0]/80 border-[#faf6f0]/35",
-  "Recently Sold": "bg-[#1a1716]/90 text-[#c9a877] border-[#c9a877]/60",
-};
 
 // Testimonials — placeholder set, real client quotes replace later.
 const TESTIMONIALS = [
@@ -169,30 +211,18 @@ export default function Home() {
                 </div>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
                   {items.map((p) => (
-                    <article key={p.id} className="group">
-                      <div className="relative mb-5">
-                        {p.images && p.images.length > 0 ? (
-                          <ListingCarousel images={p.images} alt={p.title} />
-                        ) : (
-                          <div
-                            className="aspect-[4/5] w-full rounded-sm overflow-hidden"
-                            style={{
-                              backgroundImage:
-                                "radial-gradient(ellipse 60% 50% at 30% 30%, rgba(201,168,119,0.22), transparent 60%)," +
-                                "radial-gradient(ellipse 70% 60% at 80% 80%, rgba(60,50,40,0.55), transparent 65%)," +
-                                "linear-gradient(150deg, #2a2520 0%, #15110f 100%)",
-                            }}
-                          />
-                        )}
-                        <span className={`absolute top-4 left-4 text-[10px] tracking-[0.2em] uppercase font-semibold px-3 py-1 rounded-full border z-10 ${STATUS_BADGE[p.status]}`}>{p.status}</span>
-                      </div>
-                      <p className="font-serif text-xl text-[#1a1716] tracking-normal leading-tight">{p.title}</p>
-                      <p className="text-[11px] tracking-[0.16em] uppercase text-[#1a1716]/55 mt-1">{p.area}</p>
-                      <div className="flex items-center justify-between mt-3">
-                        <p className="font-serif text-lg text-[#c9a877]">{p.price}</p>
-                        <Link href="/listings" className="link-anim text-[11px] tracking-[0.2em] uppercase font-semibold text-[#1a1716]">Learn more →</Link>
-                      </div>
-                    </article>
+                    <ListingCard
+                      key={p.id}
+                      id={p.id}
+                      title={p.title}
+                      area={p.area}
+                      price={p.price}
+                      status={p.status}
+                      meta={p.meta}
+                      desc={p.desc}
+                      images={p.images}
+                      compact
+                    />
                   ))}
                 </div>
               </div>

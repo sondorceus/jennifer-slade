@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import ListingCarousel from "./ListingCarousel";
+import ListingCard from "./ListingCard";
 
 export type BrowserListing = {
   id: string;
@@ -13,14 +13,6 @@ export type BrowserListing = {
   meta: string;
   desc: string;
   images?: string[];
-};
-
-const STATUS_BADGE: Record<BrowserListing["status"], string> = {
-  Active:        "bg-[#c9a877]/15 text-[#c9a877] border-[#c9a877]/30",
-  "Coming Soon": "bg-[#c9a877]/15 text-[#c9a877] border-[#c9a877]/35",
-  Pending:       "bg-[#1a1716]/10 text-[#1a1716]/65 border-[#1a1716]/15",
-  Sold:          "bg-[#1a1716] text-[#faf6f0] border-[#1a1716]",
-  "Off-Market":  "bg-transparent text-[#1a1716]/85 border-[#1a1716]/35",
 };
 
 // Three luxury-real-estate sections, ordered for narrative flow.
@@ -92,31 +84,17 @@ export default function ListingsBrowser({ listings }: Props) {
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
               {items.map((l) => (
-                <article key={l.id} className="group">
-                  <div className="mb-5 relative">
-                    {l.images && l.images.length > 0 ? (
-                      <ListingCarousel images={l.images} alt={l.title} />
-                    ) : (
-                      <div
-                        className="aspect-[4/5] w-full rounded-sm overflow-hidden"
-                        style={{
-                          backgroundImage:
-                            "radial-gradient(ellipse 60% 50% at 30% 30%, rgba(201,168,119,0.22), transparent 60%)," +
-                            "radial-gradient(ellipse 70% 60% at 80% 80%, rgba(60,50,40,0.55), transparent 65%)," +
-                            "linear-gradient(150deg, #2a2520 0%, #15110f 100%)",
-                        }}
-                      />
-                    )}
-                    <span className={`absolute top-4 left-4 text-[10px] tracking-[0.2em] uppercase font-semibold px-3 py-1 rounded-full border z-10 ${STATUS_BADGE[l.status]}`}>{l.status}</span>
-                  </div>
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-[11px] tracking-[0.16em] uppercase text-[#1a1716]/55">{l.area}</p>
-                  </div>
-                  <h3 className="font-serif text-2xl text-[#1a1716] tracking-normal leading-tight">{l.title}</h3>
-                  <p className="font-serif text-xl text-[#c9a877] mt-2">{l.price}</p>
-                  <p className="text-[12.5px] tracking-[0.06em] text-[#1a1716]/60 mt-2">{l.meta}</p>
-                  <p className="editorial text-[15px] text-[#1a1716]/70 mt-4 leading-relaxed">{l.desc}</p>
-                </article>
+                <ListingCard
+                  key={l.id}
+                  id={l.id}
+                  title={l.title}
+                  area={l.area}
+                  price={l.price}
+                  status={l.status}
+                  meta={l.meta}
+                  desc={l.desc}
+                  images={l.images}
+                />
               ))}
             </div>
           </section>
