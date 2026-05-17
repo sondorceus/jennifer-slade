@@ -302,16 +302,17 @@ export default function Home() {
                   </Link>
                 </div>
                 {/* Quick-scroll menu — horizontal swipe row at all
-                    viewports per Skywalker 2026-05-17. Each card has a
-                    fixed min-width so multiple stay visible side-by-side
-                    on tablet/desktop and snap-scroll cleanly on mobile.
-                    Right-edge fade hints at more content. */}
+                    viewports per Skywalker 2026-05-17. Card width tuned
+                    to 92vw on mobile so the next card only peeks ~8% —
+                    enough to signal "swipe for more" without looking
+                    like a layout cut-off. Wider gutter on the trailing
+                    side accommodates the right-edge fade. */}
                 <div className="relative -mx-6 lg:mx-0">
                   <div
-                    className="flex gap-5 lg:gap-6 px-6 lg:px-0 overflow-x-auto pb-2 lg:pb-0 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                    className="flex gap-5 lg:gap-6 px-6 pr-10 lg:px-0 overflow-x-auto pb-2 lg:pb-0 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
                   >
                     {items.map((p) => (
-                      <div key={p.id} className="shrink-0 w-[78vw] sm:w-[48%] lg:w-[31%] snap-start">
+                      <div key={p.id} className="shrink-0 w-[92vw] sm:w-[48%] lg:w-[31%] snap-start">
                         <ListingCard
                           id={p.id}
                           title={p.title}
@@ -331,10 +332,12 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
-                  {/* Right-edge fade — only show when there are enough
-                      cards to scroll (more than fit on desktop). */}
-                  {items.length > 3 && (
-                    <div className="absolute right-0 top-0 bottom-2 w-16 bg-gradient-to-l from-[#faf6f0] to-transparent pointer-events-none lg:hidden" />
+                  {/* Right-edge fade — wider + stronger on mobile so the
+                      peek of the next card looks like a deliberate
+                      ghost rather than a layout cut. Hides on lg+
+                      where the grid fits all visible cards. */}
+                  {items.length > 1 && (
+                    <div className="absolute right-0 top-0 bottom-2 w-24 bg-gradient-to-l from-[#faf6f0] via-[#faf6f0]/85 to-transparent pointer-events-none lg:hidden" />
                   )}
                 </div>
               </div>
