@@ -25,3 +25,6 @@ next-env.d.ts
 Thumbs.db
 
 .vercel
+
+# Playwright persistent profile (cookies, history — local-only)
+.cache/

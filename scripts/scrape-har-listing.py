@@ -1,7 +1,16 @@
 #!/usr/bin/env python3
 """Scrape a single HAR.com listing page for photos + specs.
 
-HAR.com 403s curl / WebFetch. Real Chromium via Playwright works.
+HAR.com runs PerimeterX bot detection. To get past it without a paid
+residential proxy, we use:
+  - Real Chrome (channel="chrome"), not headless Chromium
+  - Persistent profile so cookies accumulate across runs
+  - --disable-blink-features=AutomationControlled launch arg
+  - Hand-crafted init script that masks navigator.webdriver, plugins,
+    languages, and the chrome.runtime object
+  - A "warm-up" navigation through google.com first so the profile
+    has realistic browsing context before hitting HAR
+  - Mouse jitter + scroll between page loads
 
 Run:
   python3 scripts/scrape-har-listing.py <har-url> <slug-prefix>
@@ -9,10 +18,6 @@ Run:
   python3 scripts/scrape-har-listing.py \
       "https://www.har.com/homedetail/211-honey-creek-6-ct-austin-tx-78738-us/17242532" \
       honey-creek
-
-Output:
-  - public/listings/{prefix}-{n}.jpg     — images (up to 12)
-  - public/listings/{prefix}.json        — extracted specs payload
 """
 from __future__ import annotations
 import json, re, sys, time, urllib.request
@@ -21,26 +26,48 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).parent.parent
 OUT_DIR = ROOT / "public" / "listings"
+PROFILE_DIR = ROOT / ".cache" / "playwright-profile"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36"
 
+LAUNCH_ARGS = [
+    "--disable-blink-features=AutomationControlled",
+    "--no-default-browser-check",
+    "--no-first-run",
+    "--disable-dev-shm-usage",
+    "--start-maximized",
+]
 
-def safe_get(d, *keys, default=""):
-    for k in keys:
-        if isinstance(d, dict) and k in d:
-            return d[k]
-    return default
+INIT_SCRIPT = """
+    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+    Object.defineProperty(navigator, 'plugins',   { get: () => [
+        { 0: { type: "application/x-google-chrome-pdf" }, description: "Chrome PDF Plugin", filename: "internal-pdf-viewer", length: 1, name: "Chrome PDF Plugin" },
+        { 0: { type: "application/pdf" }, description: "Chrome PDF Viewer", filename: "mhjfbmdgcfjbbpaeojofohoefgiehjai", length: 1, name: "Chrome PDF Viewer" },
+        { 0: { type: "application/x-nacl" }, description: "Native Client", filename: "internal-nacl-plugin", length: 1, name: "Native Client" }
+    ]});
+    Object.defineProperty(navigator, 'languages', { get: () => ['en-US','en'] });
+    Object.defineProperty(navigator, 'hardwareConcurrency', { get: () => 8 });
+    Object.defineProperty(navigator, 'deviceMemory',        { get: () => 8 });
+    window.chrome = { runtime: {}, app: { isInstalled: false }, csi: () => {}, loadTimes: () => {} };
+    const originalQuery = window.navigator.permissions.query;
+    window.navigator.permissions.query = (p) =>
+        p.name === 'notifications'
+            ? Promise.resolve({ state: Notification.permission })
+            : originalQuery(p);
+"""
 
 
 def fetch_image(url: str, dst: Path):
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": UA, "Referer": "https://www.har.com/"})
+        req = urllib.request.Request(url, headers={
+            "User-Agent": UA,
+            "Referer": "https://www.har.com/",
+            "Accept": "image/avif,image/webp,image/png,image/jpeg,*/*;q=0.8",
+        })
         with urllib.request.urlopen(req, timeout=30) as r:
-            data = r.read()
-        dst.write_bytes(data)
-        return len(data)
+            return r.read()
     except Exception as e:
-        print(f"   image fetch failed {url}: {e}", flush=True)
-        return 0
+        print(f"   fetch err {e}", flush=True)
+        return None
 
 
 def main():
@@ -50,144 +77,165 @@ def main():
     url = sys.argv[1]
     prefix = sys.argv[2]
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    PROFILE_DIR.mkdir(parents=True, exist_ok=True)
 
     print(f"[har] {url}", flush=True)
-    print(f"[har] saving as {prefix}-*.jpg", flush=True)
+    print(f"[har] profile dir: {PROFILE_DIR}", flush=True)
 
     with sync_playwright() as p:
-        # Use channel="chrome" so we present as real Chrome (not headless-marked
-        # Chromium). HAR uses PerimeterX which fingerprints headless Chromium.
+        # Persistent context — cookies/history carry across runs.
         try:
-            browser = p.chromium.launch(headless=False, channel="chrome")
-        except Exception:
-            browser = p.chromium.launch(headless=False)
-        ctx = browser.new_context(
-            user_agent=UA,
-            viewport={"width": 1366, "height": 900},
-            locale="en-US",
-            timezone_id="America/Chicago",
-            extra_http_headers={
-                "Accept-Language": "en-US,en;q=0.9",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-                "Sec-Fetch-Dest": "document",
-                "Sec-Fetch-Mode": "navigate",
-                "Sec-Fetch-Site": "none",
-                "Sec-Fetch-User": "?1",
-                "Upgrade-Insecure-Requests": "1",
-            },
-        )
-        # Mask the standard headless-Chromium fingerprints.
-        ctx.add_init_script("""
-            Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
-            Object.defineProperty(navigator, 'plugins',   { get: () => [1,2,3,4,5] });
-            Object.defineProperty(navigator, 'languages', { get: () => ['en-US','en'] });
-            window.chrome = { runtime: {} };
-        """)
-        page = ctx.new_page()
+            ctx = p.chromium.launch_persistent_context(
+                user_data_dir=str(PROFILE_DIR),
+                channel="chrome",
+                headless=False,
+                args=LAUNCH_ARGS,
+                viewport={"width": 1366, "height": 900},
+                locale="en-US",
+                timezone_id="America/Chicago",
+                user_agent=UA,
+                ignore_default_args=["--enable-automation"],
+            )
+        except Exception as e:
+            print(f"[har] chrome channel launch failed ({e}), falling back to bundled chromium", flush=True)
+            ctx = p.chromium.launch_persistent_context(
+                user_data_dir=str(PROFILE_DIR),
+                headless=False,
+                args=LAUNCH_ARGS,
+                viewport={"width": 1366, "height": 900},
+                locale="en-US",
+                timezone_id="America/Chicago",
+                user_agent=UA,
+                ignore_default_args=["--enable-automation"],
+            )
+        ctx.add_init_script(INIT_SCRIPT)
+
+        page = ctx.pages[0] if ctx.pages else ctx.new_page()
+
+        # Warm-up: hit google first so cookies look normal.
+        print(f"[har] warm-up: google.com", flush=True)
+        try:
+            page.goto("https://www.google.com/", wait_until="domcontentloaded", timeout=20000)
+            page.wait_for_timeout(1500)
+            page.mouse.move(640, 320)
+            page.mouse.move(800, 400, steps=12)
+        except Exception as e:
+            print(f"[har] warm-up nav err {e}", flush=True)
+
+        # Pause briefly, then go to target.
+        page.wait_for_timeout(800)
+        print(f"[har] target: {url}", flush=True)
         try:
             page.goto(url, wait_until="domcontentloaded", timeout=60000)
         except Exception as e:
-            print(f"[har] navigation failed: {e}", flush=True)
+            print(f"[har] target nav err {e}", flush=True)
+            ctx.close()
             sys.exit(2)
-        # Let PerimeterX run, lazy images load, gallery render.
-        page.wait_for_timeout(5000)
-        # Scroll through the page to trigger lazy-loaded photos.
-        for y in range(0, 4000, 600):
-            page.evaluate(f"window.scrollTo(0, {y})")
-            page.wait_for_timeout(400)
-        page.wait_for_timeout(2000)
 
-        # Pull JSON-LD blocks (HAR usually has Product / Residence schema)
-        ldblocks = page.evaluate("""() => {
-            const out = [];
+        # Let PerimeterX run / human-pace settle.
+        for i in range(6):
+            page.wait_for_timeout(1500)
+            page.mouse.move(200 + i * 80, 300 + i * 30, steps=10)
+            page.evaluate(f"window.scrollTo(0, {i * 500})")
+
+        title = page.title()
+        print(f"[har] title: {title}", flush=True)
+
+        # If we hit the captcha wall, try waiting longer in case PX
+        # auto-clears for a "trusted" profile.
+        if "denied" in title.lower() or "captcha" in title.lower():
+            print(f"[har] captcha wall detected — waiting 30s for auto-clear", flush=True)
+            page.wait_for_timeout(30000)
+            try:
+                page.reload(wait_until="domcontentloaded", timeout=45000)
+                page.wait_for_timeout(5000)
+            except Exception as e:
+                print(f"[har] reload err {e}", flush=True)
+            title = page.title()
+            print(f"[har] post-reload title: {title}", flush=True)
+
+        # Extract images + JSON-LD
+        result = page.evaluate("""() => {
+            const ld = [];
             for (const el of document.querySelectorAll('script[type=\"application/ld+json\"]')) {
-                try { out.push(JSON.parse(el.textContent)); } catch (e) {}
+                try { ld.push(JSON.parse(el.textContent)); } catch (e) {}
             }
-            return out;
-        }""")
-
-        # Pull every distinct image URL from the page
-        images = page.evaluate("""() => {
-            const urls = new Set();
+            const imgs = new Set();
             for (const el of document.querySelectorAll('img')) {
                 const src = el.currentSrc || el.src || el.getAttribute('data-src');
-                if (src) urls.add(src);
+                if (src) imgs.add(src);
             }
             for (const el of document.querySelectorAll('source')) {
-                const src = el.srcset || el.src;
-                if (src) {
-                    for (const part of src.split(',')) {
-                        const u = part.trim().split(' ')[0];
-                        if (u) urls.add(u);
-                    }
+                for (const part of (el.srcset || el.src || '').split(',')) {
+                    const u = part.trim().split(' ')[0];
+                    if (u) imgs.add(u);
                 }
             }
-            // og:image + twitter:image
             for (const m of document.querySelectorAll('meta')) {
                 const prop = (m.getAttribute('property') || m.getAttribute('name') || '').toLowerCase();
                 if (prop.includes('image')) {
                     const c = m.getAttribute('content');
-                    if (c) urls.add(c);
+                    if (c) imgs.add(c);
                 }
             }
-            return [...urls];
+            return {
+                title: document.title,
+                ogTitle: document.querySelector('meta[property=\"og:title\"]')?.content || '',
+                ogDescription: document.querySelector('meta[property=\"og:description\"]')?.content || '',
+                bodyText: document.body?.innerText?.slice(0, 1000) || '',
+                ld, imgs: [...imgs],
+            };
         }""")
 
-        # Pull a few key text fields HAR exposes
-        text_data = page.evaluate("""() => ({
-            title: document.title,
-            ogTitle: document.querySelector('meta[property=\"og:title\"]')?.content || '',
-            ogDescription: document.querySelector('meta[property=\"og:description\"]')?.content || '',
-            description: document.querySelector('meta[name=\"description\"]')?.content || '',
-        })""")
+        ctx.close()
 
-        browser.close()
+    print(f"[har] image candidates: {len(result['imgs'])}", flush=True)
 
-    # Pick HAR-hosted photo CDN images. HAR uses photos.harstatic.com
-    # for property imagery — filter out brand chrome / icons.
+    # Filter to property-photo CDNs across HAR / Redfin / Zillow / Realtor.
+    # Reject brand chrome / icons / sprites by extension + path heuristic.
+    PHOTO_HOST_HINTS = (
+        "harstatic", "har.com",
+        "ssl.cdn-redfin.com", "cdn-redfin.com", "redfin.com",
+        "photos.zillowstatic.com", "zillowstatic.com",
+        "rdcpix.com", "photos.realtor",
+        "compass-listing-photos",
+    )
+    REJECT_PATH_HINTS = ("/logo", "/icon", "/sprite", "/avatar", "favicon", "google-play", "app-store")
     good = []
-    seen = set()
-    for u in images:
-        if not u or not u.startswith("http"):
-            continue
-        if "photos.harstatic" not in u and "img.har.com" not in u and "harstatic" not in u:
-            continue
-        # Strip query suffix variations so we de-dup the same photo across sizes.
+    seen_bases = set()
+    for u in result["imgs"]:
+        if not u or not u.startswith("http"): continue
+        host = u.split("/")[2].lower()
+        if not any(h in host for h in PHOTO_HOST_HINTS): continue
+        path = u.split("/", 3)[-1].lower()
+        if any(r in path for r in REJECT_PATH_HINTS): continue
         base = u.split("?")[0]
-        if base in seen:
-            continue
-        seen.add(base)
+        if base in seen_bases: continue
+        seen_bases.add(base)
         good.append(u)
 
-    print(f"[har] found {len(good)} property images", flush=True)
+    print(f"[har] property-photo URLs: {len(good)}", flush=True)
     saved = []
     for i, img_url in enumerate(good[:12], 1):
-        dst = OUT_DIR / f"{prefix}-{i}.jpg"
-        nbytes = fetch_image(img_url, dst)
-        if nbytes > 0:
-            saved.append({"i": i, "url": img_url, "file": str(dst.name), "bytes": nbytes})
-            print(f"   [{i}] saved {dst.name} ({nbytes} bytes)", flush=True)
-
-    # Pull specs from JSON-LD if available — HAR usually carries
-    # numberOfRooms / floorSize / address / offers.price.
-    specs = {}
-    for ld in ldblocks:
-        if isinstance(ld, list):
-            for item in ld: specs.update(item if isinstance(item, dict) else {})
-        elif isinstance(ld, dict):
-            specs.update(ld)
+        data = fetch_image(img_url, OUT_DIR / f"{prefix}-{i}.jpg")
+        if data:
+            (OUT_DIR / f"{prefix}-{i}.jpg").write_bytes(data)
+            saved.append({"i": i, "url": img_url, "bytes": len(data)})
+            print(f"   [{i}] saved {prefix}-{i}.jpg ({len(data)} bytes)", flush=True)
 
     payload = {
         "url": url,
         "prefix": prefix,
-        "text": text_data,
-        "specs_ld": specs,
-        "images_saved": saved,
-        "raw_image_count": len(images),
+        "result_title": result["title"],
+        "result_og": {"title": result["ogTitle"], "desc": result["ogDescription"]},
+        "body_preview": result["bodyText"][:500],
+        "specs_ld": result["ld"][:3] if result["ld"] else [],
+        "image_total": len(result["imgs"]),
         "har_image_count": len(good),
+        "saved": saved,
     }
     (OUT_DIR / f"{prefix}.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    print(f"\n[har] done. specs payload -> public/listings/{prefix}.json", flush=True)
+    print(f"\n[har] payload -> public/listings/{prefix}.json", flush=True)
 
 
 if __name__ == "__main__":

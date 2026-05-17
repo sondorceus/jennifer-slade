@@ -1,14 +1,194 @@
 {
-  "url": "https://www.har.com/homedetail/211-honey-creek-6-ct-austin-tx-78738-us/17242532?cid=ABORTX-828933",
+  "url": "https://www.redfin.com/TX/Austin/211-Honey-Creek-Ct-78738/unit-6/home/169741410",
   "prefix": "honey-creek",
-  "text": {
-    "title": "Access to this page has been denied",
-    "ogTitle": "",
-    "ogDescription": "",
-    "description": "px-captcha"
+  "result_title": "211 Honey Creek Ct #6, Austin, TX 78738 | Redfin",
+  "result_og": {
+    "title": "211 Honey Creek Ct #6, Austin, TX 78738 - 3 beds/2.5 baths",
+    "desc": "(Unlock MLS) 3 beds, 2.5 baths, 1903 sq. ft. condo located at 211 Honey Creek Ct #6, Austin, TX 78738 sold on Mar 1, 2023 after being listed at $879,900. MLS# 9165434. The WOW FACTOR &ndash; a PERFECT TEN! When..."
   },
-  "specs_ld": {},
-  "images_saved": [],
-  "raw_image_count": 0,
-  "har_image_count": 0
+  "body_preview": "Buy \u25be\nRent \u25be\nSell \u25be\nMortgage \u25be\nReal Estate Agents \u25be\nFeed\nJoin / Sign in\nSearch\nOverview\nSale & tax history\nProperty details\nNeighborhood\nClimate\nFavorite\nEdit Facts\nShare\nOFF MARKET\nStreet ViewRedesign\nLAST LISTED AT $879,900, CLOSED ON MAR 1, 2023\n$777,360\n3\nbd\n\u2022\n2.5 ba\n\u2022\n1,903\nsq ft\n211 Honey Creek Ct #6, Austin, TX 78738\nClaim home\nClaim home to manage this property\nView dashboard\nEdit facts\nManage photos\nAbout this home\n\nThe WOW FACTOR \u2013 a PERFECT TEN! When one combines the exceptional floor",
+  "specs_ld": [
+    {
+      "@context": "http://schema.org",
+      "@type": "Organization",
+      "name": "Redfin",
+      "logo": "https://ssl.cdn-redfin.com/v628.2.1/images/logos/Redfin_Logo.png",
+      "url": "https://www.redfin.com"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": [
+        "Product",
+        "RealEstateListing"
+      ],
+      "name": "211 Honey Creek Ct #6",
+      "description": "The WOW FACTOR &ndash; a PERFECT TEN! When one combines the exceptional floorplan, the show-stopping view, the impeccable contemporary design, a list of upgrades beyond all others, a location to die for in the best schools and near Lake Travis, shopping and major roads, with an amazingly affordable price tag the result is your new home. The 3/2.5/2 Lantana is the largest floorplan in Honey Creek with breathtaking views of Texas Hill Country, the city of Lakeway, and environs beyond. These Santa Barbara-style up scale, free-standing condos are truly lock and leave with the HOA taking full care of all of the front yards including watering, and backyard mowing. Living, dining, kitchen and master are on the upper floor to take advantage of the views. Lower level includes two great sized bedrooms, bath, laundry and lots of storage along with the 2-car attached garage. Beyond the basic home the owners have added over $50,000 in enhancements. Structurally, the beams in the living room were added, a doggy door and ramp to the backyard, and full gutters. Design wise, all of the flooring, light fixtures, front door, kitchen counters, closet shelving , and accent paint were upgraded. The backyard was fully fenced by the homeowner. Patio, gravel walkway, and edging were all added after move in. Builder extended the backyard of this home to accommodate a slight boundary change in the front yard so the yard extends beyond some of the others. Shopping is 5 minutes away, major roads to downtown, Lake Travis and Texas Hill Country are all within immediate access. Schools are renowned for academics, fine arts, athletics, and engineering and technology. Yes, this purchase is a perfect 10. ",
+      "url": "https://www.redfin.com/TX/Austin/211-Honey-Creek-Ct-78738/unit-6/home/169741410",
+      "lastReviewed": "2023-03-02T15:42:54.300Z",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://ssl.cdn-redfin.com/photo/92/bigphoto/434/9165434_0.jpg",
+        "width": 1152,
+        "height": 768
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "USD",
+        "price": 879900,
+        "url": "https://www.redfin.com/TX/Austin/211-Honey-Creek-Ct-78738/unit-6/home/169741410",
+        "availability": "https://schema.org/OutOfStock"
+      },
+      "mainEntity": {
+        "@type": "Apartment",
+        "name": "211 Honey Creek Ct #6",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "211 Honey Creek Ct #6",
+          "addressLocality": "Austin",
+          "addressRegion": "TX",
+          "postalCode": "78738",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 30.332869,
+          "longitude": -97.965296
+        },
+        "hasMap": "https://www.google.com/maps/place/@30.332869,-97.965296",
+        "yearBuilt": 2019,
+        "accommodationCategory": "Condominium",
+        "numberOfBedrooms": 3,
+        "numberOfBathroomsTotal": 2.5,
+        "floorSize": {
+          "@type": "QuantitativeValue",
+          "value": 1903,
+          "unitText": "FTK"
+        },
+        "amenityFeature": [
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Heating & cooling: Has A/C",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Laundry: Washer and dryer hookups",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Parking: 2 car garage",
+            "value": true
+          }
+        ],
+        "image": [
+          {
+            "@type": "ImageObject",
+            "url": "https://ssl.cdn-redfin.com/photo/92/bigphoto/434/9165434_0.jpg",
+            "width": 1152,
+            "height": 768
+          }
+        ]
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Redfin",
+          "item": "https://www.redfin.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Texas",
+          "item": "https://www.redfin.com/state/Texas"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Travis County",
+          "item": "https://www.redfin.com/county/2866/TX/Travis-County"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "78738",
+          "item": "https://www.redfin.com/zipcode/78738"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "211 Honey Creek Ct #6, Austin, TX 78738"
+        }
+      ]
+    }
+  ],
+  "image_total": 81,
+  "har_image_count": 45,
+  "saved": [
+    {
+      "i": 1,
+      "url": "https://ssl.cdn-redfin.com/photo/92/bigphoto/434/9165434_0.jpg",
+      "bytes": 287582
+    },
+    {
+      "i": 2,
+      "url": "https://ssl.cdn-redfin.com/photo/92/bcsphoto/977/genBcs.3399977_Q.jpg",
+      "bytes": 26746
+    },
+    {
+      "i": 3,
+      "url": "https://ssl.cdn-redfin.com/photo/92/bcsphoto/565/genBcs.8568565_D.jpg",
+      "bytes": 30956
+    },
+    {
+      "i": 4,
+      "url": "https://ssl.cdn-redfin.com/photo/92/bcsphoto/221/genBcs.6500221_5.jpg",
+      "bytes": 25696
+    },
+    {
+      "i": 5,
+      "url": "https://ssl.cdn-redfin.com/photo/92/bcsphoto/275/genBcs.2546275_F.jpg",
+      "bytes": 33711
+    },
+    {
+      "i": 6,
+      "url": "https://ssl.cdn-redfin.com/photo/92/bcsphoto/523/genBcs.4345523_S.jpg",
+      "bytes": 44075
+    },
+    {
+      "i": 7,
+      "url": "https://ssl.cdn-redfin.com/photo/92/bcsphoto/888/genBcs.8414888_9.jpg",
+      "bytes": 34509
+    },
+    {
+      "i": 8,
+      "url": "https://ssl.cdn-redfin.com/photo/92/mbphoto/742/genMid.8300742_0.jpg",
+      "bytes": 50759
+    },
+    {
+      "i": 9,
+      "url": "https://ssl.cdn-redfin.com/photo/92/mbphoto/742/genMid.8300742_1_0.jpg",
+      "bytes": 44143
+    },
+    {
+      "i": 10,
+      "url": "https://ssl.cdn-redfin.com/photo/92/mbphoto/742/genMid.8300742_39_0.jpg",
+      "bytes": 47486
+    },
+    {
+      "i": 11,
+      "url": "https://ssl.cdn-redfin.com/photo/92/mbphoto/588/genMid.7239588_0.jpg",
+      "bytes": 51777
+    },
+    {
+      "i": 12,
+      "url": "https://ssl.cdn-redfin.com/photo/92/mbphoto/588/genMid.7239588_1_0.jpg",
+      "bytes": 47815
+    }
+  ]
 }

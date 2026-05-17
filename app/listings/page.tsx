@@ -15,6 +15,7 @@ type Listing = {
   price: string;
   meta: string;
   desc: string;
+  image?: string;
 };
 
 // Real listings cross-referenced from Skywalker's 2026-05-17 intel
@@ -29,6 +30,7 @@ const LISTINGS: Listing[] = [
     price: "$799,900",
     meta: "3 bed · 2.5 bath · 1,903 sqft · MLS 1754607",
     desc: "Santa Barbara-style free-standing residence sitting between two peaceful valleys in a coveted Lakeway enclave — panoramic canyon views and lock-and-leave living. One of just 30 homes in an exclusive two-street community, with vaulted ceilings, his-and-her showers, and a professionally landscaped fully fenced backyard. Four minutes to H-E-B, ten to the Hill Country Galleria.",
+    image: "/listings/honey-creek-1.jpg",
   },
   {
     id: "dripping-springs-sold",
@@ -103,16 +105,21 @@ export default function ListingsPage() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
           {LISTINGS.map((l) => (
             <article key={l.id} className="group cursor-default">
-              {/* Photo placeholder — swap for real listing imagery. */}
+              {/* Photo — real listing imagery when scraped, gradient
+                  placeholder otherwise. */}
               <div
-                className="aspect-[4/5] w-full rounded-sm overflow-hidden mb-5"
-                style={{
+                className="aspect-[4/5] w-full rounded-sm overflow-hidden mb-5 relative"
+                style={l.image ? undefined : {
                   backgroundImage:
                     "radial-gradient(ellipse 60% 50% at 30% 30%, rgba(201,168,119,0.22), transparent 60%)," +
                     "radial-gradient(ellipse 70% 60% at 80% 80%, rgba(60,50,40,0.55), transparent 65%)," +
                     "linear-gradient(150deg, #2a2520 0%, #15110f 100%)",
                 }}
-              />
+              >
+                {l.image && (
+                  <img src={l.image} alt={l.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" />
+                )}
+              </div>
               <div className="flex items-center justify-between mb-3">
                 <span className={`text-[10px] tracking-[0.2em] uppercase font-semibold px-3 py-1 rounded-full border ${STATUS_BADGE[l.status]}`}>{l.status}</span>
                 <span className="text-[11px] tracking-[0.16em] uppercase text-[#1a1716]/55">{l.area}</span>

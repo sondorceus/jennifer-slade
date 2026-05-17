@@ -7,14 +7,23 @@ import LeadForm from "./components/LeadForm";
 // per Skywalker 2026-05-17 (Homes.com, HAR, Unlock MLS, Kuper Sotheby cross-
 // referenced). Real listings + closings. Photos pending direct upload from
 // Skywalker or scraper run against the public DBs.
-const FEATURED = [
-  { id: "honey-creek-lakeway",   status: "Active",        title: "211 Honey Creek Ct #6, Lakeway",    price: "$799,900",          area: "Lakeway · 78738" },
+type Featured = {
+  id: string;
+  status: string;
+  title: string;
+  price: string;
+  area: string;
+  image?: string;
+};
+
+const FEATURED: Featured[] = [
+  { id: "honey-creek-lakeway",   status: "Active",        title: "211 Honey Creek Ct #6, Lakeway",    price: "$799,900",          area: "Lakeway · 78738", image: "/listings/honey-creek-1.jpg" },
   { id: "dripping-springs-sold", status: "Recently Sold", title: "Hill Country Luxury Estate",        price: "Sold · $2,350,000", area: "Dripping Springs" },
   { id: "miss-kitty-horseshoe",  status: "Active",        title: "Miss Kitty — Build Lot Acreage",    price: "Inquire",           area: "Horseshoe Bay" },
   { id: "gunsmoke-horseshoe",    status: "Active",        title: "Gunsmoke — Build Lot Acreage",      price: "Inquire",           area: "Horseshoe Bay" },
   { id: "westlake-ridge",        status: "Coming Soon",   title: "Westlake Ridgeline Estate",         price: "Price upon request", area: "Westlake" },
   { id: "tarrytown-classic",     status: "Off-Market",    title: "Tarrytown Classic — Heritage Lot",  price: "Inquire privately", area: "Tarrytown" },
-] as const;
+];
 
 const STATUS_BADGE: Record<string, string> = {
   "Coming Soon":   "bg-[#c9a877]/15 text-[#c9a877] border-[#c9a877]/35",
@@ -131,14 +140,17 @@ export default function Home() {
               <article key={p.id} className="group">
                 <div
                   className="aspect-[4/5] w-full rounded-sm overflow-hidden mb-5 relative"
-                  style={{
+                  style={p.image ? undefined : {
                     backgroundImage:
                       "radial-gradient(ellipse 60% 50% at 30% 30%, rgba(201,168,119,0.22), transparent 60%)," +
                       "radial-gradient(ellipse 70% 60% at 80% 80%, rgba(60,50,40,0.55), transparent 65%)," +
                       "linear-gradient(150deg, #2a2520 0%, #15110f 100%)",
                   }}
                 >
-                  <span className={`absolute top-4 left-4 text-[10px] tracking-[0.2em] uppercase font-semibold px-3 py-1 rounded-full border ${STATUS_BADGE[p.status]}`}>{p.status}</span>
+                  {p.image && (
+                    <img src={p.image} alt={p.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" />
+                  )}
+                  <span className={`absolute top-4 left-4 text-[10px] tracking-[0.2em] uppercase font-semibold px-3 py-1 rounded-full border z-10 ${STATUS_BADGE[p.status]}`}>{p.status}</span>
                 </div>
                 <p className="font-serif text-xl text-[#1a1716] tracking-normal leading-tight">{p.title}</p>
                 <p className="text-[11px] tracking-[0.16em] uppercase text-[#1a1716]/55 mt-1">{p.area}</p>
