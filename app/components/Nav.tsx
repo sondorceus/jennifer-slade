@@ -3,10 +3,17 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+// Nav mirrors austinluxurygroup.com's structure — the model Skywalker
+// pointed at on 2026-05-17. Order matters: identity / market authority /
+// utility / proof. Contact is the right-side CTA.
 const NAV_LINKS = [
-  { href: "/about",    label: "About" },
-  { href: "/listings", label: "Portfolio" },
-  { href: "/contact",  label: "Inquire" },
+  { href: "/about",        label: "About" },
+  { href: "/buy",          label: "Buy" },
+  { href: "/sell",         label: "Sell" },
+  { href: "/listings",     label: "Search" },
+  { href: "/ranch-land",   label: "Ranch + Land" },
+  { href: "/testimonials", label: "Testimonials" },
+  { href: "/resources",    label: "Resources" },
 ];
 
 export default function Nav() {
@@ -39,7 +46,7 @@ export default function Nav() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-10 text-[11.5px] tracking-[0.18em] uppercase text-[#1a1716]/75">
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-[11px] xl:text-[11.5px] tracking-[0.16em] uppercase text-[#1a1716]/75">
             {NAV_LINKS.map((l) => (
               <Link key={l.href} href={l.href} className="link-anim hover:text-[#1a1716]">{l.label}</Link>
             ))}
@@ -48,9 +55,9 @@ export default function Nav() {
           <div className="hidden lg:block">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#1a1716]/70 text-[#1a1716] text-[11.5px] tracking-[0.18em] uppercase font-medium hover:bg-[#1a1716] hover:text-[#faf6f0] transition-all"
+              className="inline-flex items-center gap-2 px-5 xl:px-6 py-3 rounded-full border border-[#1a1716]/70 text-[#1a1716] text-[11px] xl:text-[11.5px] tracking-[0.18em] uppercase font-medium hover:bg-[#1a1716] hover:text-[#faf6f0] transition-all"
             >
-              Elite Consultation <span aria-hidden>→</span>
+              Contact Us <span aria-hidden>→</span>
             </Link>
           </div>
 
