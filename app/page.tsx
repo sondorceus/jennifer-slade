@@ -27,8 +27,19 @@ type Featured = {
 // Ordered DSC-then-DJI so the gallery tells the story: facade →
 // rooms → landscape → aerial closers.
 const HONEY_CREEK_PHOTOS = Array.from({ length: 50 }, (_, i) => `/listings/honey-creek-${i + 1}.jpg`);
+const WESTHILL_PHOTOS = Array.from({ length: 12 }, (_, i) => `/listings/westhill-${i + 1}.jpg`);
 
 const FEATURED: Featured[] = [
+  {
+    id: "westhill-south-austin",
+    status: "Active",
+    title: "2904 Westhill Dr, Austin",
+    price: "$3,190,000",
+    area: "South Austin · 78704",
+    meta: "5 bed · 4.5 bath · 3,530 sqft · 0.21 ac · Built 2025 · MLS 2682180",
+    desc: "Modern luxury new build in the heart of Austin's 78704. A 5-bedroom, 4.5-bathroom masterpiece blending architectural sophistication with everyday comfort. Chef's kitchen with 54\" SubZero, Wolf 48\" gas cooktop with separate double oven, quartz waterfall island, and a walk-through pantry with a second sink, fridge, and dishwasher. Double-sided fireplace, main-level primary suite with a balcony built-in outdoor kitchen overlooking the pool, wraparound putting green, and outdoor fireplace. Second-level living + three bedrooms. Lower level with private entrance — home office, guest retreat, or game room with full bath and direct pool access. Owner will consider owner-finance options.",
+    images: WESTHILL_PHOTOS,
+  },
   {
     id: "honey-creek-lakeway",
     status: "Active",
