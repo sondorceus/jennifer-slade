@@ -301,18 +301,20 @@ export default function Home() {
                     View All <span aria-hidden>→</span>
                   </Link>
                 </div>
-                {/* Quick-scroll menu — full-width cards on mobile, no
-                    peek, snap one-card-per-page. Dot indicator below
-                    shows position + signals there's more. Desktop
-                    reverts to the 3-column grid since all cards fit. */}
+                {/* Quick-scroll menu — one-card-per-page on mobile with
+                    ZERO peek. Each slot is exactly 100vw with the card
+                    breathing room as internal padding; no inter-card
+                    gap on mobile means the next card cannot leak in.
+                    Snap-center anchors each card precisely. Desktop
+                    reverts to a 3-column grid since all cards fit. */}
                 <div className="-mx-6 lg:mx-0">
                   <div
-                    className="flex gap-5 lg:gap-6 px-6 lg:px-0 overflow-x-auto pb-2 lg:pb-0 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                    className="flex lg:gap-6 lg:px-0 overflow-x-auto pb-2 lg:pb-0 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
                   >
                     {items.map((p) => (
                       <div
                         key={p.id}
-                        className="shrink-0 w-[calc(100vw-3rem)] sm:w-[48%] lg:w-[31%] snap-start snap-always"
+                        className="shrink-0 w-screen px-6 snap-center snap-always lg:w-[31%] lg:px-0"
                       >
                         <ListingCard
                           id={p.id}
