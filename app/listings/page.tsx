@@ -24,11 +24,11 @@ const LISTINGS: Listing[] = [
   {
     id: "honey-creek-lakeway",
     status: "Active",
-    title: "211 Honey Creek #6 Ct",
-    area: "Lakeway",
-    price: "$779,900",
-    meta: "Specs [TBD] — Kuper Sotheby's-listed luxury residence",
-    desc: "An active Lakeway luxury residence in the Honey Creek enclave. Full architectural details and tour available privately.",
+    title: "211 Honey Creek Ct #6",
+    area: "Lakeway · 78738",
+    price: "$799,900",
+    meta: "3 bed · 2.5 bath · 1,903 sqft · MLS 1754607",
+    desc: "Santa Barbara-style free-standing residence sitting between two peaceful valleys in a coveted Lakeway enclave — panoramic canyon views and lock-and-leave living. One of just 30 homes in an exclusive two-street community, with vaulted ceilings, his-and-her showers, and a professionally landscaped fully fenced backyard. Four minutes to H-E-B, ten to the Hill Country Galleria.",
   },
   {
     id: "dripping-springs-sold",

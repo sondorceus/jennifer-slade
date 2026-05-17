@@ -8,7 +8,7 @@ import LeadForm from "./components/LeadForm";
 // referenced). Real listings + closings. Photos pending direct upload from
 // Skywalker or scraper run against the public DBs.
 const FEATURED = [
-  { id: "honey-creek-lakeway",   status: "Active",        title: "211 Honey Creek #6 Ct, Lakeway",    price: "$779,900",          area: "Lakeway" },
+  { id: "honey-creek-lakeway",   status: "Active",        title: "211 Honey Creek Ct #6, Lakeway",    price: "$799,900",          area: "Lakeway · 78738" },
   { id: "dripping-springs-sold", status: "Recently Sold", title: "Hill Country Luxury Estate",        price: "Sold · $2,350,000", area: "Dripping Springs" },
   { id: "miss-kitty-horseshoe",  status: "Active",        title: "Miss Kitty — Build Lot Acreage",    price: "Inquire",           area: "Horseshoe Bay" },
   { id: "gunsmoke-horseshoe",    status: "Active",        title: "Gunsmoke — Build Lot Acreage",      price: "Inquire",           area: "Horseshoe Bay" },
