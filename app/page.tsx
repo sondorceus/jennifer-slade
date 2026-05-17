@@ -161,10 +161,15 @@ export default function Home() {
     <main className="relative z-[2] min-h-screen text-[#1a1716]">
       <Nav />
 
-      {/* HERO — cinematic full-bleed */}
+      {/* HERO — cinematic full-bleed with looping background video.
+          Video sits at z-0, dark overlay at z-[1] for text readability,
+          portrait at z-[5], content at z-10. The gradient backdrop
+          stays as the poster-frame fallback in case the video fails
+          to load (autoplay-blocked, slow network, prefers-reduced-motion). */}
       <section className="relative w-full min-h-[92svh] -mt-[68px] overflow-hidden bg-[#0f0c0a] text-[#faf6f0]">
+        {/* Poster-frame fallback gradient */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 z-0"
           style={{
             backgroundImage:
               "radial-gradient(ellipse 75% 55% at 20% 25%, rgba(201,168,119,0.18), transparent 60%)," +
@@ -172,7 +177,18 @@ export default function Home() {
               "linear-gradient(160deg, #0f0c0a 0%, #1a1413 55%, #0a0807 100%)",
           }}
         />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_50%,transparent_30%,rgba(0,0,0,0.45)_100%)]" />
+        {/* Background video — Austin / luxury establishing loop from
+            Skywalker 2026-05-17. 8s 1280x720, autoplays muted, loops,
+            object-cover so it fills the entire hero. */}
+        <video
+          className="absolute inset-0 w-full h-full object-cover z-[1] motion-reduce:hidden"
+          src="/video/hero-loop.mp4"
+          autoPlay muted loop playsInline preload="auto"
+          poster=""
+        />
+        {/* Dark cinematic vignette over the video for headline contrast */}
+        <div className="absolute inset-0 z-[2] bg-gradient-to-b from-[#0f0c0a]/35 via-[#0f0c0a]/15 to-[#0f0c0a]/70" />
+        <div className="absolute inset-0 z-[2] bg-[radial-gradient(ellipse_70%_60%_at_50%_50%,transparent_30%,rgba(0,0,0,0.45)_100%)]" />
         {/* Jennifer's portrait positioned right side on desktop — uses
             a top-fade + side-fade mask so the white background of the
             photo blends seamlessly into the dark cinematic hero. The
