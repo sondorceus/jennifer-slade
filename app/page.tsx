@@ -136,7 +136,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FEATURED PROPERTIES */}
+      {/* FEATURED PROPERTIES — grouped by status (Skywalker 2026-05-17
+          clarity-audit): Active / Private Exclusives & Coming Soon /
+          Past Successes. Each section header + card grid. Renders only
+          the buckets that have entries. */}
       <section className="bg-[#faf6f0] py-24 lg:py-32 px-6 lg:px-12">
         <div className="max-w-[1400px] mx-auto">
           <div className="flex items-end justify-between mb-14 flex-wrap gap-6">
@@ -146,34 +149,56 @@ export default function Home() {
             </div>
             <Link href="/listings" className="link-anim text-[11.5px] tracking-[0.2em] uppercase text-[#1a1716]">View All <span aria-hidden>→</span></Link>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
-            {FEATURED.map((p) => (
-              <article key={p.id} className="group">
-                <div className="relative mb-5">
-                  {p.images && p.images.length > 0 ? (
-                    <ListingCarousel images={p.images} alt={p.title} />
-                  ) : (
-                    <div
-                      className="aspect-[4/5] w-full rounded-sm overflow-hidden"
-                      style={{
-                        backgroundImage:
-                          "radial-gradient(ellipse 60% 50% at 30% 30%, rgba(201,168,119,0.22), transparent 60%)," +
-                          "radial-gradient(ellipse 70% 60% at 80% 80%, rgba(60,50,40,0.55), transparent 65%)," +
-                          "linear-gradient(150deg, #2a2520 0%, #15110f 100%)",
-                      }}
-                    />
-                  )}
-                  <span className={`absolute top-4 left-4 text-[10px] tracking-[0.2em] uppercase font-semibold px-3 py-1 rounded-full border z-10 ${STATUS_BADGE[p.status]}`}>{p.status}</span>
+
+          {([
+            { title: "Active Listings",                  eyebrow: "On the market now",                 statuses: ["Active"] },
+            { title: "Private Exclusives & Coming Soon", eyebrow: "Before the public market",          statuses: ["Off-Market", "Coming Soon", "Just Listed"] },
+            { title: "Past Successes",                    eyebrow: "Recent representative closings",   statuses: ["Sold", "Recently Sold"] },
+          ] as const).map((section) => {
+            const items = FEATURED.filter((p) => (section.statuses as readonly string[]).includes(p.status));
+            if (items.length === 0) return null;
+            return (
+              <div key={section.title} className="mb-16 lg:mb-20 last:mb-0">
+                <div className="flex items-end justify-between mb-8 flex-wrap gap-3">
+                  <div>
+                    <p className="eyebrow text-[#c9a877] mb-2">{section.eyebrow}</p>
+                    <h3 className="display text-[#1a1716] text-2xl sm:text-3xl lg:text-4xl leading-tight">
+                      {section.title}<em className="italic">.</em>
+                    </h3>
+                  </div>
+                  <span className="text-[10px] tracking-[0.22em] uppercase text-[#1a1716]/50">{items.length} {items.length === 1 ? "property" : "properties"}</span>
                 </div>
-                <p className="font-serif text-xl text-[#1a1716] tracking-normal leading-tight">{p.title}</p>
-                <p className="text-[11px] tracking-[0.16em] uppercase text-[#1a1716]/55 mt-1">{p.area}</p>
-                <div className="flex items-center justify-between mt-3">
-                  <p className="font-serif text-lg text-[#c9a877]">{p.price}</p>
-                  <Link href="/listings" className="link-anim text-[11px] tracking-[0.2em] uppercase font-semibold text-[#1a1716]">Learn more →</Link>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
+                  {items.map((p) => (
+                    <article key={p.id} className="group">
+                      <div className="relative mb-5">
+                        {p.images && p.images.length > 0 ? (
+                          <ListingCarousel images={p.images} alt={p.title} />
+                        ) : (
+                          <div
+                            className="aspect-[4/5] w-full rounded-sm overflow-hidden"
+                            style={{
+                              backgroundImage:
+                                "radial-gradient(ellipse 60% 50% at 30% 30%, rgba(201,168,119,0.22), transparent 60%)," +
+                                "radial-gradient(ellipse 70% 60% at 80% 80%, rgba(60,50,40,0.55), transparent 65%)," +
+                                "linear-gradient(150deg, #2a2520 0%, #15110f 100%)",
+                            }}
+                          />
+                        )}
+                        <span className={`absolute top-4 left-4 text-[10px] tracking-[0.2em] uppercase font-semibold px-3 py-1 rounded-full border z-10 ${STATUS_BADGE[p.status]}`}>{p.status}</span>
+                      </div>
+                      <p className="font-serif text-xl text-[#1a1716] tracking-normal leading-tight">{p.title}</p>
+                      <p className="text-[11px] tracking-[0.16em] uppercase text-[#1a1716]/55 mt-1">{p.area}</p>
+                      <div className="flex items-center justify-between mt-3">
+                        <p className="font-serif text-lg text-[#c9a877]">{p.price}</p>
+                        <Link href="/listings" className="link-anim text-[11px] tracking-[0.2em] uppercase font-semibold text-[#1a1716]">Learn more →</Link>
+                      </div>
+                    </article>
+                  ))}
                 </div>
-              </article>
-            ))}
-          </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
