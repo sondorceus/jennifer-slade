@@ -3,17 +3,18 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-// Nav mirrors austinluxurygroup.com's structure — the model Skywalker
-// pointed at on 2026-05-17. Order matters: identity / market authority /
-// utility / proof. Contact is the right-side CTA.
+// Nav distilled to Skywalker's 2026-05-17 clarity-audit spec — 4 items
+// matching ultra-luxury convention (Apple, Aesop, McKinsey-grade brand
+// sites). The earlier 8-item ALG-style nav was too dense for the brand.
+// Routes still exist (Buy / Sell / Listings / Testimonials / Resources /
+// Ranch+Land) but they're reached via inline page CTAs rather than the
+// top nav. Featured Portfolio -> /listings, Private Exclusives -> /buy
+// (the off-market access hub), Inquire -> /contact.
 const NAV_LINKS = [
-  { href: "/about",        label: "About" },
-  { href: "/buy",          label: "Buy" },
-  { href: "/sell",         label: "Sell" },
-  { href: "/listings",     label: "Search" },
-  { href: "/ranch-land",   label: "Ranch + Land" },
-  { href: "/testimonials", label: "Testimonials" },
-  { href: "/resources",    label: "Resources" },
+  { href: "/about",    label: "About" },
+  { href: "/listings", label: "Featured Portfolio" },
+  { href: "/buy",      label: "Private Exclusives" },
+  { href: "/contact",  label: "Inquire" },
 ];
 
 export default function Nav() {

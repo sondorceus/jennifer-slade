@@ -83,13 +83,13 @@ export default function BuyPage() {
         <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 pt-32 lg:pt-44 pb-24 min-h-[80svh] flex flex-col justify-center">
           <p className="eyebrow text-[#c9a877] mb-6">For Buyers</p>
           <h1 className="display text-[#faf6f0] text-[12vw] sm:text-[9vw] lg:text-[8vw] xl:text-[140px] leading-[0.92] max-w-5xl">
-            Access to Austin's <em className="italic">off-market</em><br />opportunities.
+            Unlocking Austin's <em className="italic">Private Inventory.</em>
           </h1>
           <p className="editorial text-[#faf6f0]/85 text-xl lg:text-2xl max-w-2xl mt-10 leading-relaxed">
-            The most interesting homes don't list. Buyer representation built around the network where they quietly trade.
+            Bespoke buyer services — access the off-market pocket listings, neighborhood lifestyle curation, country-club intelligence, and waterfront opportunities that never reach the public MLS.
           </p>
           <Link href="#access" className="inline-flex items-center gap-2 mt-12 px-8 py-4 rounded-full bg-[#c9a877] text-[#1a1716] text-[11.5px] tracking-[0.2em] uppercase font-semibold hover:bg-[#faf6f0] transition-colors w-fit">
-            Request Off-Market Access <span aria-hidden>→</span>
+            Apply for Private Access to Off-Market Listings <span aria-hidden>→</span>
           </Link>
         </div>
       </section>

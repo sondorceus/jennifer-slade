@@ -52,13 +52,13 @@ export default function SellPage() {
         <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 pt-32 lg:pt-44 pb-24 min-h-[80svh] flex flex-col justify-center">
           <p className="eyebrow text-[#c9a877] mb-6">For Sellers</p>
           <h1 className="display text-[#faf6f0] text-[12vw] sm:text-[9vw] lg:text-[8vw] xl:text-[140px] leading-[0.92] max-w-5xl">
-            Discreet, <em className="italic">maximum-value</em><br />home sales.
+            Strategic Listing Representation for <em className="italic">Austin's Finest Estates.</em>
           </h1>
           <p className="editorial text-[#faf6f0]/85 text-xl lg:text-2xl max-w-2xl mt-10 leading-relaxed">
-            Marketing built for high-net-worth privacy, designed to attract a serious buyer — not the merely curious.
+            Tailored digital marketing, professional staging partnerships, architectural videography, and a track record across Westlake, Tarrytown, Lakeway, and the Dripping Springs hill country.
           </p>
           <Link href="#valuation" className="inline-flex items-center gap-2 mt-12 px-8 py-4 rounded-full bg-[#c9a877] text-[#1a1716] text-[11.5px] tracking-[0.2em] uppercase font-semibold hover:bg-[#faf6f0] transition-colors w-fit">
-            Request a Discreet Valuation <span aria-hidden>→</span>
+            Request a Discreet Valuation Consultation <span aria-hidden>→</span>
           </Link>
         </div>
       </section>
