@@ -301,14 +301,13 @@ export default function Home() {
                     View All <span aria-hidden>→</span>
                   </Link>
                 </div>
-                {/* Quick-scroll menu — card sized so the next card hints
-                    at the right edge with a soft cream feather (designed
-                    "more this way" affordance, not a cutoff). Skywalker
-                    2026-05-17: "I loved the white that was shadowing".
-                    Math at scroll=0: card1 = 100vw - 4rem (64px), gap-3
-                    = 12px, leaves a 28px sliver of card2 on the right
-                    which the 64px cream-fade overlay dissolves into the
-                    page background — luxury teaser, not bug. */}
+                {/* Quick-scroll menu — soft "white shadowing" affordance
+                    tuned to 30% less than the previous attempt per
+                    Skywalker 2026-05-17 ("you did it way too much").
+                    Math: card1 = 100vw - 3.5rem (56px) + gap-3 (12px)
+                    leaves a 20px sliver of card2 on the right, which
+                    the 48px cream-fade overlay dissolves into the page
+                    background — a quiet teaser, not a feature. */}
                 <div className="relative -mx-6 lg:mx-0">
                   <div
                     className="flex gap-3 lg:gap-6 px-6 lg:px-0 overflow-x-auto pb-2 lg:pb-0 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
@@ -316,7 +315,7 @@ export default function Home() {
                     {items.map((p) => (
                       <div
                         key={p.id}
-                        className="shrink-0 w-[calc(100vw-4rem)] sm:w-[48%] lg:w-[31%] snap-start snap-always"
+                        className="shrink-0 w-[calc(100vw-3.5rem)] sm:w-[48%] lg:w-[31%] snap-start snap-always"
                       >
                         <ListingCard
                           id={p.id}
@@ -338,12 +337,11 @@ export default function Home() {
                     ))}
                   </div>
                   {/* Cream edge-fade — feathers the trailing card sliver
-                      into the page bg so it reads as a designed teaser,
-                      not a cutoff. Mobile-only; desktop grid doesn't
-                      need it since all cards fit. */}
+                      into the page bg. Reduced to w-12 (48px) per
+                      Skywalker — the previous w-16 read as too heavy. */}
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute top-0 bottom-2 right-0 w-16 lg:hidden bg-gradient-to-l from-[#faf6f0] via-[#faf6f0]/90 to-transparent"
+                    className="pointer-events-none absolute top-0 bottom-2 right-0 w-12 lg:hidden bg-gradient-to-l from-[#faf6f0] via-[#faf6f0]/90 to-transparent"
                   />
                   {/* Dot indicator — mobile only (lg+ has grid view).
                       Shows total count + "swipe for more" affordance. */}
