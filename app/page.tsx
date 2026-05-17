@@ -336,16 +336,11 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
-                  {/* Cream edge-fade — narrowed to w-8 (32px) per
-                      Skywalker 2026-05-17 so the gradient no longer
-                      bleeds into card1's right edge. The fade now sits
-                      mostly over the gap + 12px peek, dissolving the
-                      next-card sliver into the page background without
-                      cream-tinting card1 itself. */}
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute top-0 bottom-2 right-0 w-8 lg:hidden bg-gradient-to-l from-[#faf6f0] via-[#faf6f0]/70 to-transparent"
-                  />
+                  {/* Cream-fade overlay removed per Skywalker 2026-05-17
+                      ("the white effect blanks maybe just remove for
+                      now but leave the small preview of the next").
+                      The 12px peek of card2 stays — just no overlay
+                      tinting card1 or the peek into cream. */}
                   {/* Dot indicator — mobile only (lg+ has grid view).
                       Shows total count + "swipe for more" affordance. */}
                   {items.length > 1 && (
