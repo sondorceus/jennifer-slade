@@ -14,7 +14,12 @@ const BROKER_INFO = {
   // Exact TREC labels — these are the compliance-required wording.
   iabsLabel:           "Texas Real Estate Commission Information About Brokerage Services",
   consumerNoticeLabel: "Texas Real Estate Commission Consumer Protection Notice",
-  iabsUrl:           "https://www.trec.texas.gov/sites/default/files/pdf-forms/IABS%201-0.pdf",
+  // Jennifer's COMPLETED IABS PDF (per Skywalker 2026-05-17 — supplied
+  // via Google Drive, downloaded to public/legal/ on 2026-05-17 so we
+  // serve it from our own domain rather than Drive). 531KB, PDF v1.6,
+  // pre-filled with Rundog Real Estate Group / Premier Texas Realty
+  // brokerage details per TREC compliance requirements.
+  iabsUrl:           "/legal/iabs-jennifer-slade.pdf",
   consumerNoticeUrl: "https://www.trec.texas.gov/sites/default/files/pdf-forms/CN%201-4.pdf",
 };
 
