@@ -2,6 +2,7 @@ import Link from "next/link";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import LeadForm from "./components/LeadForm";
+import ListingCarousel from "./components/ListingCarousel";
 
 // Featured properties — reflects Jennifer's verified transactional footprint
 // per Skywalker 2026-05-17 (Homes.com, HAR, Unlock MLS, Kuper Sotheby cross-
@@ -13,11 +14,16 @@ type Featured = {
   title: string;
   price: string;
   area: string;
-  image?: string;
+  /** Full photo array — first image is the hero. Carousel auto-cycles. */
+  images?: string[];
 };
 
+// Auto-build the Honey Creek photo array since the scraper saved them
+// as honey-creek-1.jpg through honey-creek-12.jpg.
+const HONEY_CREEK_PHOTOS = Array.from({ length: 12 }, (_, i) => `/listings/honey-creek-${i + 1}.jpg`);
+
 const FEATURED: Featured[] = [
-  { id: "honey-creek-lakeway",   status: "Active",        title: "211 Honey Creek Ct #6, Lakeway",    price: "$799,900",          area: "Lakeway · 78738", image: "/listings/honey-creek-1.jpg" },
+  { id: "honey-creek-lakeway",   status: "Active",        title: "211 Honey Creek Ct #6, Lakeway",    price: "$799,900",          area: "Lakeway · 78738", images: HONEY_CREEK_PHOTOS },
   { id: "dripping-springs-sold", status: "Recently Sold", title: "Hill Country Luxury Estate",        price: "Sold · $2,350,000", area: "Dripping Springs" },
   { id: "miss-kitty-horseshoe",  status: "Active",        title: "Miss Kitty — Build Lot Acreage",    price: "Inquire",           area: "Horseshoe Bay" },
   { id: "gunsmoke-horseshoe",    status: "Active",        title: "Gunsmoke — Build Lot Acreage",      price: "Inquire",           area: "Horseshoe Bay" },
@@ -138,17 +144,19 @@ export default function Home() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
             {FEATURED.map((p) => (
               <article key={p.id} className="group">
-                <div
-                  className="aspect-[4/5] w-full rounded-sm overflow-hidden mb-5 relative"
-                  style={p.image ? undefined : {
-                    backgroundImage:
-                      "radial-gradient(ellipse 60% 50% at 30% 30%, rgba(201,168,119,0.22), transparent 60%)," +
-                      "radial-gradient(ellipse 70% 60% at 80% 80%, rgba(60,50,40,0.55), transparent 65%)," +
-                      "linear-gradient(150deg, #2a2520 0%, #15110f 100%)",
-                  }}
-                >
-                  {p.image && (
-                    <img src={p.image} alt={p.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" />
+                <div className="relative mb-5">
+                  {p.images && p.images.length > 0 ? (
+                    <ListingCarousel images={p.images} alt={p.title} />
+                  ) : (
+                    <div
+                      className="aspect-[4/5] w-full rounded-sm overflow-hidden"
+                      style={{
+                        backgroundImage:
+                          "radial-gradient(ellipse 60% 50% at 30% 30%, rgba(201,168,119,0.22), transparent 60%)," +
+                          "radial-gradient(ellipse 70% 60% at 80% 80%, rgba(60,50,40,0.55), transparent 65%)," +
+                          "linear-gradient(150deg, #2a2520 0%, #15110f 100%)",
+                      }}
+                    />
                   )}
                   <span className={`absolute top-4 left-4 text-[10px] tracking-[0.2em] uppercase font-semibold px-3 py-1 rounded-full border z-10 ${STATUS_BADGE[p.status]}`}>{p.status}</span>
                 </div>

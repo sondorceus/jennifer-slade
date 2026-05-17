@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
+import ListingCarousel from "../components/ListingCarousel";
 
 export const metadata = {
   title: "Curated Portfolio — Jennifer Slade Luxury Real Estate",
@@ -15,8 +16,11 @@ type Listing = {
   price: string;
   meta: string;
   desc: string;
-  image?: string;
+  /** Full photo array — first is hero. Carousel auto-cycles. */
+  images?: string[];
 };
+
+const HONEY_CREEK_PHOTOS = Array.from({ length: 12 }, (_, i) => `/listings/honey-creek-${i + 1}.jpg`);
 
 // Real listings cross-referenced from Skywalker's 2026-05-17 intel
 // (Homes.com, HAR, Unlock MLS, Kuper Sotheby). Specs marked [TBD] are
@@ -30,7 +34,7 @@ const LISTINGS: Listing[] = [
     price: "$799,900",
     meta: "3 bed · 2.5 bath · 1,903 sqft · MLS 1754607",
     desc: "Santa Barbara-style free-standing residence sitting between two peaceful valleys in a coveted Lakeway enclave — panoramic canyon views and lock-and-leave living. One of just 30 homes in an exclusive two-street community, with vaulted ceilings, his-and-her showers, and a professionally landscaped fully fenced backyard. Four minutes to H-E-B, ten to the Hill Country Galleria.",
-    image: "/listings/honey-creek-1.jpg",
+    images: HONEY_CREEK_PHOTOS,
   },
   {
     id: "dripping-springs-sold",
@@ -105,19 +109,21 @@ export default function ListingsPage() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
           {LISTINGS.map((l) => (
             <article key={l.id} className="group cursor-default">
-              {/* Photo — real listing imagery when scraped, gradient
-                  placeholder otherwise. */}
-              <div
-                className="aspect-[4/5] w-full rounded-sm overflow-hidden mb-5 relative"
-                style={l.image ? undefined : {
-                  backgroundImage:
-                    "radial-gradient(ellipse 60% 50% at 30% 30%, rgba(201,168,119,0.22), transparent 60%)," +
-                    "radial-gradient(ellipse 70% 60% at 80% 80%, rgba(60,50,40,0.55), transparent 65%)," +
-                    "linear-gradient(150deg, #2a2520 0%, #15110f 100%)",
-                }}
-              >
-                {l.image && (
-                  <img src={l.image} alt={l.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" />
+              {/* Photo — auto-cycling carousel when scraped photos
+                  available, gradient placeholder otherwise. */}
+              <div className="mb-5">
+                {l.images && l.images.length > 0 ? (
+                  <ListingCarousel images={l.images} alt={l.title} />
+                ) : (
+                  <div
+                    className="aspect-[4/5] w-full rounded-sm overflow-hidden"
+                    style={{
+                      backgroundImage:
+                        "radial-gradient(ellipse 60% 50% at 30% 30%, rgba(201,168,119,0.22), transparent 60%)," +
+                        "radial-gradient(ellipse 70% 60% at 80% 80%, rgba(60,50,40,0.55), transparent 65%)," +
+                        "linear-gradient(150deg, #2a2520 0%, #15110f 100%)",
+                    }}
+                  />
                 )}
               </div>
               <div className="flex items-center justify-between mb-3">
