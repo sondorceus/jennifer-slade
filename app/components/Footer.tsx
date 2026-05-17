@@ -1,20 +1,52 @@
 import Link from "next/link";
 
-// TREC compliance: every page footer must display:
-//   - link to TREC Information About Brokerage Services (IABS) form
-//   - link to TREC Consumer Protection Notice
-//   - brokerage name + logo
-//   - agent's TREC license number
-// Brokerage + license confirmed by Skywalker 2026-05-17:
-//   Rundog Real Estate Group, LLC · 401 Congress Ave, Austin, TX 78701
-//   Jennifer Slade · TREC License #0828933
+// TREC compliance — verified against Skywalker's 2026-05-17 guidance:
+//   - Brokerage name/logo must be visible (≥50% of largest contact info)
+//   - IABS + Consumer Protection Notice links with EXACT labels per TREC
+//   - Equal Housing Opportunity + REALTOR® marks
+//   - Sponsoring broker chain disclosed: Rundog under Premier Texas Realty
+//   - Jennifer Slade · TREC License #0828933 · 401 Congress Ave, Austin
 const BROKER_INFO = {
-  name: "Rundog Real Estate Group, LLC",
+  agencyName: "Rundog Real Estate Group, LLC",
+  sponsoringBroker: "Premier Texas Realty",
   brokerAddress: "401 Congress Ave, Austin, TX 78701",
   agentLicense: "TREC #0828933",
-  iabsUrl: "https://www.trec.texas.gov/sites/default/files/pdf-forms/IABS%201-0.pdf",
+  // Exact TREC labels — these are the compliance-required wording.
+  iabsLabel:           "Texas Real Estate Commission Information About Brokerage Services",
+  consumerNoticeLabel: "Texas Real Estate Commission Consumer Protection Notice",
+  iabsUrl:           "https://www.trec.texas.gov/sites/default/files/pdf-forms/IABS%201-0.pdf",
   consumerNoticeUrl: "https://www.trec.texas.gov/sites/default/files/pdf-forms/CN%201-4.pdf",
 };
+
+// SVG renditions of the federal Equal Housing Opportunity mark and
+// the NAR REALTOR® block-R mark. Compact, tinted to match the dark
+// footer. The actual official files require NAR / HUD download — these
+// are recognizable stand-ins acceptable for staging. Final production
+// build should swap in the official artwork that Jennifer has on file.
+function EqualHousingMark({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 80 64" className={className} fill="none" stroke="currentColor" strokeWidth="2.5">
+      {/* House outline */}
+      <path d="M16 28L40 8L64 28V60H16V28Z" strokeLinejoin="round" />
+      {/* Equal sign inside */}
+      <line x1="28" y1="42" x2="52" y2="42" />
+      <line x1="28" y1="48" x2="52" y2="48" />
+    </svg>
+  );
+}
+
+function RealtorMark({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 80 64" className={className}>
+      {/* Block "R" inside a rounded badge */}
+      <rect x="6" y="4" width="56" height="56" rx="6" fill="currentColor" />
+      <text x="34" y="44" textAnchor="middle" fontFamily="Helvetica, Arial Black, sans-serif" fontWeight="900" fontSize="36" fill="#1a1716">R</text>
+      {/* ® registered-trademark mark to the right */}
+      <circle cx="70" cy="14" r="6" fill="none" stroke="currentColor" strokeWidth="2" />
+      <text x="70" y="18" textAnchor="middle" fontFamily="Helvetica, sans-serif" fontWeight="700" fontSize="8" fill="currentColor">R</text>
+    </svg>
+  );
+}
 
 export default function Footer() {
   return (
@@ -25,8 +57,17 @@ export default function Footer() {
             <p className="font-serif text-3xl lg:text-4xl tracking-tight leading-tight">
               Jennifer <em className="italic font-normal">Slade</em>
             </p>
-            <p className="editorial text-base lg:text-lg text-[#faf6f0]/70 mt-4 max-w-md leading-relaxed">
-              Quiet, deliberate representation for buyers and sellers in Westlake, Tarrytown, Lake Austin, Barton Creek, and the Dripping Springs estates.
+            {/* Brokerage chain — must be ≥50% of agent-name size for TREC
+                compliance. Using xl/2xl serif satisfies that against
+                the 3xl-4xl agent name above. */}
+            <p className="font-serif text-xl lg:text-2xl text-[#c9a877] mt-4 tracking-tight">
+              {BROKER_INFO.agencyName}
+            </p>
+            <p className="text-[12px] tracking-[0.16em] uppercase text-[#faf6f0]/55 mt-2">
+              Sponsored by {BROKER_INFO.sponsoringBroker}
+            </p>
+            <p className="editorial text-base lg:text-lg text-[#faf6f0]/70 mt-6 max-w-md leading-relaxed">
+              Quiet, deliberate representation for buyers and sellers in Westlake, Tarrytown, Lakeway, Lake Austin, Barton Creek, and the Dripping Springs hill country.
             </p>
           </div>
           <div className="lg:col-span-3">
@@ -48,22 +89,40 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* TREC compliance block */}
-        <div className="mt-16 pt-10 border-t border-[#faf6f0]/15 grid md:grid-cols-2 gap-6 text-[12px] tracking-[0.04em] text-[#faf6f0]/65">
+        {/* TREC compliance block — exact label wording per TREC rules. */}
+        <div className="mt-16 pt-10 border-t border-[#faf6f0]/15 grid md:grid-cols-2 gap-8 text-[12px] tracking-[0.04em] text-[#faf6f0]/65">
           <div>
-            <p className="mb-2">Jennifer Slade · {BROKER_INFO.agentLicense}</p>
-            <p>Brokered by {BROKER_INFO.name}</p>
+            <p className="mb-1">Jennifer Slade · {BROKER_INFO.agentLicense}</p>
+            <p>
+              Licensed real estate agent in the State of Texas with
+              {" "}{BROKER_INFO.agencyName}.
+            </p>
           </div>
-          <div className="flex flex-wrap gap-x-6 gap-y-2 md:justify-end">
-            <a href={BROKER_INFO.iabsUrl} target="_blank" rel="noopener noreferrer" className="link-anim">TREC Information About Brokerage Services</a>
-            <a href={BROKER_INFO.consumerNoticeUrl} target="_blank" rel="noopener noreferrer" className="link-anim">TREC Consumer Protection Notice</a>
+          <div className="flex flex-col gap-2 md:items-end">
+            <a href={BROKER_INFO.iabsUrl} target="_blank" rel="noopener noreferrer" className="link-anim">
+              {BROKER_INFO.iabsLabel}
+            </a>
+            <a href={BROKER_INFO.consumerNoticeUrl} target="_blank" rel="noopener noreferrer" className="link-anim">
+              {BROKER_INFO.consumerNoticeLabel}
+            </a>
           </div>
         </div>
 
-        {/* Equal Housing + Realtor lockup placeholder */}
-        <div className="mt-8 flex items-center justify-between text-[11px] tracking-wider uppercase text-[#faf6f0]/45">
-          <p>© {new Date().getFullYear()} Jennifer Slade · All rights reserved</p>
-          <p className="hidden sm:block">Equal Housing Opportunity · REALTOR®</p>
+        {/* Equal Housing + REALTOR® lockup + copyright */}
+        <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div className="flex items-center gap-5 text-[#faf6f0]/55">
+            <div className="flex items-center gap-2">
+              <EqualHousingMark className="w-8 h-8 text-[#faf6f0]/55" />
+              <span className="text-[10px] tracking-[0.22em] uppercase leading-tight max-w-[110px]">Equal Housing<br />Opportunity</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <RealtorMark className="w-8 h-8 text-[#faf6f0]/55" />
+              <span className="text-[10px] tracking-[0.22em] uppercase">REALTOR<sup className="text-[7px]">®</sup></span>
+            </div>
+          </div>
+          <p className="text-[11px] tracking-wider uppercase text-[#faf6f0]/40">
+            © {new Date().getFullYear()} Jennifer Slade · All rights reserved
+          </p>
         </div>
       </div>
     </footer>
