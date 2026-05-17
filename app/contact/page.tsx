@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
+import LeadForm from "../components/LeadForm";
 
 export const metadata = {
   title: "Inquire — Jennifer Slade Luxury Real Estate",
@@ -25,46 +26,10 @@ export default function ContactPage() {
       {/* Two-column: form + direct contact */}
       <section className="px-6 lg:px-12 pb-24 lg:pb-32 max-w-[1400px] mx-auto">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
-          <form className="lg:col-span-7 space-y-6">
-            <div className="grid sm:grid-cols-2 gap-5">
-              <label className="block">
-                <span className="block eyebrow text-[#8d6f4f] mb-2">First name</span>
-                <input type="text" className="w-full bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/30" placeholder="—" />
-              </label>
-              <label className="block">
-                <span className="block eyebrow text-[#8d6f4f] mb-2">Last name</span>
-                <input type="text" className="w-full bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/30" placeholder="—" />
-              </label>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-5">
-              <label className="block">
-                <span className="block eyebrow text-[#8d6f4f] mb-2">Email</span>
-                <input type="email" className="w-full bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/30" placeholder="—" />
-              </label>
-              <label className="block">
-                <span className="block eyebrow text-[#8d6f4f] mb-2">Phone</span>
-                <input type="tel" className="w-full bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/30" placeholder="—" />
-              </label>
-            </div>
-            <label className="block">
-              <span className="block eyebrow text-[#8d6f4f] mb-2">Reason for inquiry</span>
-              <select className="w-full bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716]">
-                <option>Selling a residence</option>
-                <option>Buying in Austin</option>
-                <option>Off-market opportunities</option>
-                <option>Discreet valuation</option>
-                <option>Press / referral / other</option>
-              </select>
-            </label>
-            <label className="block">
-              <span className="block eyebrow text-[#8d6f4f] mb-2">Brief note</span>
-              <textarea rows={5} className="w-full bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/30 resize-none" placeholder="Anything that matters — timeline, neighborhood, the property style you love." />
-            </label>
-            <button type="button" disabled className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#1a1716] text-[#faf6f0] text-[11.5px] tracking-[0.2em] uppercase font-medium opacity-70 cursor-not-allowed">
-              Submission wired post-CRM <span aria-hidden>→</span>
-            </button>
-            <p className="text-xs text-[#1a1716]/55">Form routes to Jennifer's CRM via webhook — wired once CRM platform is confirmed.</p>
-          </form>
+          <div className="lg:col-span-7">
+            <LeadForm intent="Contact" source="contact-page" variant="contact" submitLabel="Send Inquiry" dark={false} />
+            <p className="text-xs text-[#1a1716]/55 mt-6">Submissions route to Jennifer privately. Replies land within one business day.</p>
+          </div>
 
           <aside className="lg:col-span-5 lg:border-l lg:border-[#1a1716]/15 lg:pl-12">
             <p className="eyebrow text-[#8d6f4f] mb-6">Direct</p>

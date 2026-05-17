@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
+import LeadForm from "../components/LeadForm";
 
 export const metadata = {
   title: "Discreet Property Valuation — Jennifer Slade",
@@ -113,17 +114,9 @@ export default function SellPage() {
         <p className="editorial text-[#1a1716]/75 text-lg lg:text-xl max-w-2xl mt-6 leading-relaxed">
           A brief note begins the conversation. A walk-through follows. A market-aware valuation arrives — privately.
         </p>
-        <form className="grid sm:grid-cols-2 gap-x-6 gap-y-6 mt-10 max-w-2xl">
-          <input type="text" placeholder="First name" className="bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/35" />
-          <input type="text" placeholder="Last name" className="bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/35" />
-          <input type="text" placeholder="Address (kept private)" className="sm:col-span-2 bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/35" />
-          <input type="email" placeholder="Email" className="bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/35" />
-          <input type="tel" placeholder="Phone" className="bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/35" />
-          <textarea rows={3} placeholder="Timeline, motivations, anything we should know." className="sm:col-span-2 bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/35 resize-none" />
-          <button type="button" disabled className="sm:col-span-2 inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#1a1716] text-[#faf6f0] text-[11.5px] tracking-[0.2em] uppercase font-medium opacity-70 cursor-not-allowed w-fit">
-            Send privately — wiring post-CRM <span aria-hidden>→</span>
-          </button>
-        </form>
+        <div className="mt-10 max-w-xl">
+          <LeadForm intent="Valuation" source="sell-page-valuation" variant="valuation" submitLabel="Send Privately" dark={false} />
+        </div>
       </section>
 
       <Footer />

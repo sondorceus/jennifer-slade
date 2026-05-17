@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
+import LeadForm from "./components/LeadForm";
 
 // Featured properties — reflects Jennifer's actual transactional footprint
 // confirmed by Skywalker 2026-05-17 (Rundog Real Estate Group): multi-million
@@ -186,37 +187,30 @@ export default function Home() {
               <p className="eyebrow text-[#c9a877] mb-4">Buying</p>
               <h3 className="font-serif text-3xl lg:text-4xl text-[#faf6f0] tracking-normal leading-tight mb-3">Buying a home?</h3>
               <p className="text-[15px] text-[#faf6f0]/70 leading-relaxed mb-6">Receive curated active and off-market listings tailored to your search.</p>
-              <form className="space-y-4">
-                <input type="text" placeholder="Full name" className="w-full bg-transparent border-b border-[#faf6f0]/30 focus:border-[#c9a877] focus:outline-none py-3 text-base font-serif text-[#faf6f0] placeholder:text-[#faf6f0]/35" />
-                <input type="email" placeholder="Email" className="w-full bg-transparent border-b border-[#faf6f0]/30 focus:border-[#c9a877] focus:outline-none py-3 text-base font-serif text-[#faf6f0] placeholder:text-[#faf6f0]/35" />
-                <button type="button" disabled className="inline-flex items-center gap-2 mt-3 px-6 py-3 rounded-full border border-[#c9a877] text-[#c9a877] text-[11px] tracking-[0.2em] uppercase font-semibold opacity-75 cursor-not-allowed">Subscribe <span aria-hidden>→</span></button>
-              </form>
+              <LeadForm intent="Buying" source="home-buying-strip" variant="newsletter" submitLabel="Subscribe" />
             </div>
             {/* Selling */}
             <div className="bg-[#0f0c0a] px-7 py-12 lg:px-10 lg:py-14">
               <p className="eyebrow text-[#c9a877] mb-4">Selling</p>
               <h3 className="font-serif text-3xl lg:text-4xl text-[#faf6f0] tracking-normal leading-tight mb-3">Selling a home?</h3>
               <p className="text-[15px] text-[#faf6f0]/70 leading-relaxed mb-6">Discreet valuations and marketing built for Austin's most considered residences.</p>
-              <form className="space-y-4">
-                <input type="text" placeholder="Full name" className="w-full bg-transparent border-b border-[#faf6f0]/30 focus:border-[#c9a877] focus:outline-none py-3 text-base font-serif text-[#faf6f0] placeholder:text-[#faf6f0]/35" />
-                <input type="email" placeholder="Email" className="w-full bg-transparent border-b border-[#faf6f0]/30 focus:border-[#c9a877] focus:outline-none py-3 text-base font-serif text-[#faf6f0] placeholder:text-[#faf6f0]/35" />
-                <button type="button" disabled className="inline-flex items-center gap-2 mt-3 px-6 py-3 rounded-full border border-[#c9a877] text-[#c9a877] text-[11px] tracking-[0.2em] uppercase font-semibold opacity-75 cursor-not-allowed">Continue <span aria-hidden>→</span></button>
-              </form>
+              <LeadForm intent="Selling" source="home-selling-strip" variant="newsletter" submitLabel="Continue" />
             </div>
             {/* Valuation */}
             <div className="bg-[#1a1413] px-7 py-12 lg:px-10 lg:py-14">
               <p className="eyebrow text-[#c9a877] mb-4">Valuation</p>
               <h3 className="font-serif text-3xl lg:text-4xl text-[#faf6f0] tracking-normal leading-tight mb-3">Know your value.</h3>
               <p className="text-[15px] text-[#faf6f0]/70 leading-relaxed mb-6">A discreet, market-aware valuation arrives privately within five business days.</p>
-              <form className="space-y-4">
-                <input type="text" placeholder="Full name" className="w-full bg-transparent border-b border-[#faf6f0]/30 focus:border-[#c9a877] focus:outline-none py-3 text-base font-serif text-[#faf6f0] placeholder:text-[#faf6f0]/35" />
-                <input type="text" placeholder="Property address" className="w-full bg-transparent border-b border-[#faf6f0]/30 focus:border-[#c9a877] focus:outline-none py-3 text-base font-serif text-[#faf6f0] placeholder:text-[#faf6f0]/35" />
-                <input type="email" placeholder="Email" className="w-full bg-transparent border-b border-[#faf6f0]/30 focus:border-[#c9a877] focus:outline-none py-3 text-base font-serif text-[#faf6f0] placeholder:text-[#faf6f0]/35" />
-                <button type="button" disabled className="inline-flex items-center gap-2 mt-3 px-6 py-3 rounded-full bg-[#c9a877] text-[#1a1716] text-[11px] tracking-[0.2em] uppercase font-semibold opacity-75 cursor-not-allowed">Request Valuation <span aria-hidden>→</span></button>
-            </form>
+              <LeadForm
+                intent="Valuation"
+                source="home-valuation-strip"
+                variant="valuation"
+                submitLabel="Request Valuation"
+                buttonClass="inline-flex items-center gap-2 mt-3 px-6 py-3 rounded-full bg-[#c9a877] text-[#1a1716] text-[11px] tracking-[0.2em] uppercase font-semibold hover:bg-[#faf6f0] disabled:opacity-60 disabled:cursor-not-allowed transition"
+              />
             </div>
           </div>
-          <p className="text-[11px] tracking-[0.04em] text-[#faf6f0]/40 text-center mt-8">Forms wire to Jennifer's CRM via webhook once the platform is confirmed.</p>
+          <p className="text-[11px] tracking-[0.04em] text-[#faf6f0]/40 text-center mt-8">Submissions route to Jennifer privately. CRM_WEBHOOK_URL + RESEND_API_KEY env vars enable real-time alerts.</p>
         </div>
       </section>
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
+import LeadForm from "../components/LeadForm";
 
 export const metadata = {
   title: "Off-Market Access — Jennifer Slade Luxury Real Estate",
@@ -141,18 +142,9 @@ export default function BuyPage() {
         <p className="editorial text-[#1a1716]/75 text-lg lg:text-xl max-w-2xl mt-6 leading-relaxed">
           A short note. Your timeline, your target. The off-market channel opens after a brief introduction call.
         </p>
-        <form className="grid sm:grid-cols-2 gap-x-6 gap-y-6 mt-10 max-w-2xl">
-          <input type="text" placeholder="First name" className="bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/35" />
-          <input type="text" placeholder="Last name" className="bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/35" />
-          <input type="email" placeholder="Email" className="bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/35" />
-          <input type="tel" placeholder="Phone" className="bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/35" />
-          <input type="text" placeholder="Target neighborhood(s)" className="sm:col-span-2 bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/35" />
-          <input type="text" placeholder="Budget range" className="sm:col-span-2 bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/35" />
-          <textarea rows={3} placeholder="Architectural preferences, timeline, anything that matters." className="sm:col-span-2 bg-transparent border-b border-[#1a1716]/30 focus:border-[#1a1716] focus:outline-none py-3 text-lg font-serif text-[#1a1716] placeholder:text-[#1a1716]/35 resize-none" />
-          <button type="button" disabled className="sm:col-span-2 inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#1a1716] text-[#faf6f0] text-[11.5px] tracking-[0.2em] uppercase font-medium opacity-70 cursor-not-allowed w-fit">
-            Submit privately — wiring post-CRM <span aria-hidden>→</span>
-          </button>
-        </form>
+        <div className="mt-10 max-w-xl">
+          <LeadForm intent="Off-Market Access" source="buy-page-access" variant="buyer-access" submitLabel="Submit Privately" dark={false} />
+        </div>
       </section>
 
       <Footer />
