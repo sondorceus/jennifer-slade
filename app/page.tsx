@@ -3,18 +3,17 @@ import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import LeadForm from "./components/LeadForm";
 
-// Featured properties — reflects Jennifer's actual transactional footprint
-// confirmed by Skywalker 2026-05-17 (Rundog Real Estate Group): multi-million
-// closing in Dripping Springs, active luxury lot in South Austin / 78704,
-// Lakeway / Bee Cave townhomes. Generic Westlake / Tarrytown placeholders
-// retained until real listing photos + addresses supplied.
+// Featured properties — reflects Jennifer's verified transactional footprint
+// per Skywalker 2026-05-17 (Homes.com, HAR, Unlock MLS, Kuper Sotheby cross-
+// referenced). Real listings + closings. Photos pending direct upload from
+// Skywalker or scraper run against the public DBs.
 const FEATURED = [
-  { id: "dripping-springs-estate", status: "Recently Sold", title: "Hill Country Estate, Dripping Springs", price: "Sold · Multi-million",   area: "Dripping Springs" },
-  { id: "south-austin-lot",        status: "For Sale",      title: "Luxury Build Lot — 78704",              price: "Price upon request",       area: "South Austin · 78704" },
-  { id: "lakeway-townhome",        status: "Active",        title: "Modern Townhome, Lakeway",              price: "Price upon request",       area: "Lakeway" },
-  { id: "westlake-ridge",          status: "Coming Soon",   title: "Westlake Ridgeline Estate",             price: "Price upon request",       area: "Westlake" },
-  { id: "tarrytown-classic",       status: "Just Listed",   title: "Tarrytown Classic on Heritage Lot",     price: "$5,400,000",                area: "Tarrytown" },
-  { id: "bee-cave-townhome",       status: "Off-Market",    title: "Bee Cave Townhome — Walled Garden",     price: "Inquire privately",         area: "Bee Cave" },
+  { id: "honey-creek-lakeway",   status: "Active",        title: "211 Honey Creek #6 Ct, Lakeway",    price: "$779,900",          area: "Lakeway" },
+  { id: "dripping-springs-sold", status: "Recently Sold", title: "Hill Country Luxury Estate",        price: "Sold · $2,350,000", area: "Dripping Springs" },
+  { id: "miss-kitty-horseshoe",  status: "Active",        title: "Miss Kitty — Build Lot Acreage",    price: "Inquire",           area: "Horseshoe Bay" },
+  { id: "gunsmoke-horseshoe",    status: "Active",        title: "Gunsmoke — Build Lot Acreage",      price: "Inquire",           area: "Horseshoe Bay" },
+  { id: "westlake-ridge",        status: "Coming Soon",   title: "Westlake Ridgeline Estate",         price: "Price upon request", area: "Westlake" },
+  { id: "tarrytown-classic",     status: "Off-Market",    title: "Tarrytown Classic — Heritage Lot",  price: "Inquire privately", area: "Tarrytown" },
 ] as const;
 
 const STATUS_BADGE: Record<string, string> = {

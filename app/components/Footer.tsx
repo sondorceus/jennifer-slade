@@ -5,12 +5,13 @@ import Link from "next/link";
 //   - link to TREC Consumer Protection Notice
 //   - brokerage name + logo
 //   - agent's TREC license number
-// Brokerage confirmed by Skywalker 2026-05-17: Rundog Real Estate Group,
-// 401 Congress Ave, Austin. Agent license # still TBD.
+// Brokerage + license confirmed by Skywalker 2026-05-17:
+//   Rundog Real Estate Group, LLC · 401 Congress Ave, Austin, TX 78701
+//   Jennifer Slade · TREC License #0828933
 const BROKER_INFO = {
-  name: "Rundog Real Estate Group",
+  name: "Rundog Real Estate Group, LLC",
   brokerAddress: "401 Congress Ave, Austin, TX 78701",
-  agentLicense: "[TREC #TBD]",
+  agentLicense: "TREC #0828933",
   iabsUrl: "https://www.trec.texas.gov/sites/default/files/pdf-forms/IABS%201-0.pdf",
   consumerNoticeUrl: "https://www.trec.texas.gov/sites/default/files/pdf-forms/CN%201-4.pdf",
 };
