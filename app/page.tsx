@@ -301,18 +301,19 @@ export default function Home() {
                     View All <span aria-hidden>→</span>
                   </Link>
                 </div>
-                {/* Quick-scroll menu — horizontal swipe row at all
-                    viewports per Skywalker 2026-05-17. Card width tuned
-                    to 92vw on mobile so the next card only peeks ~8% —
-                    enough to signal "swipe for more" without looking
-                    like a layout cut-off. Wider gutter on the trailing
-                    side accommodates the right-edge fade. */}
-                <div className="relative -mx-6 lg:mx-0">
+                {/* Quick-scroll menu — full-width cards on mobile, no
+                    peek, snap one-card-per-page. Dot indicator below
+                    shows position + signals there's more. Desktop
+                    reverts to the 3-column grid since all cards fit. */}
+                <div className="-mx-6 lg:mx-0">
                   <div
-                    className="flex gap-5 lg:gap-6 px-6 pr-10 lg:px-0 overflow-x-auto pb-2 lg:pb-0 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                    className="flex gap-5 lg:gap-6 px-6 lg:px-0 overflow-x-auto pb-2 lg:pb-0 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
                   >
                     {items.map((p) => (
-                      <div key={p.id} className="shrink-0 w-[92vw] sm:w-[48%] lg:w-[31%] snap-start">
+                      <div
+                        key={p.id}
+                        className="shrink-0 w-[calc(100vw-3rem)] sm:w-[48%] lg:w-[31%] snap-start snap-always"
+                      >
                         <ListingCard
                           id={p.id}
                           title={p.title}
@@ -332,12 +333,22 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
-                  {/* Right-edge fade — wider + stronger on mobile so the
-                      peek of the next card looks like a deliberate
-                      ghost rather than a layout cut. Hides on lg+
-                      where the grid fits all visible cards. */}
+                  {/* Dot indicator — mobile only (lg+ has grid view).
+                      Shows total count + "swipe for more" affordance
+                      without needing a card peek that reads as cut-off. */}
                   {items.length > 1 && (
-                    <div className="absolute right-0 top-0 bottom-2 w-24 bg-gradient-to-l from-[#faf6f0] via-[#faf6f0]/85 to-transparent pointer-events-none lg:hidden" />
+                    <div className="flex items-center justify-center gap-2 mt-6 lg:hidden">
+                      {items.map((_, i) => (
+                        <span
+                          key={i}
+                          aria-hidden
+                          className="h-[6px] w-[6px] rounded-full bg-[#1a1716]/25"
+                        />
+                      ))}
+                      <span className="text-[10px] tracking-[0.22em] uppercase text-[#1a1716]/55 ml-2">
+                        Swipe <span aria-hidden>→</span>
+                      </span>
+                    </div>
                   )}
                 </div>
               </div>
