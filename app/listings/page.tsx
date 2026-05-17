@@ -20,7 +20,7 @@ type Listing = {
   images?: string[];
 };
 
-const HONEY_CREEK_PHOTOS = Array.from({ length: 12 }, (_, i) => `/listings/honey-creek-${i + 1}.jpg`);
+const HONEY_CREEK_PHOTOS = ["/listings/honey-creek-1.jpg"];
 
 // Real listings cross-referenced from Skywalker's 2026-05-17 intel
 // (Homes.com, HAR, Unlock MLS, Kuper Sotheby). Specs marked [TBD] are

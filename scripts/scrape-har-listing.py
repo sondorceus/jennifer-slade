@@ -154,22 +154,52 @@ def main():
             title = page.title()
             print(f"[har] post-reload title: {title}", flush=True)
 
-        # Extract images + JSON-LD
+        # NOTE: don't auto-click "See all photos" — Redfin redirects to
+        # a Homeowner Verification flow that strips the photos. Just
+        # extract from the initially-loaded gallery state instead.
+        page.wait_for_timeout(2500)
+
+        # Extract images + JSON-LD with srcset, data-attrs, AND scan
+        # the entire page HTML for any Redfin CDN URLs we missed (the
+        # gallery often stashes them in inline script JSON state).
         result = page.evaluate("""() => {
             const ld = [];
             for (const el of document.querySelectorAll('script[type=\"application/ld+json\"]')) {
                 try { ld.push(JSON.parse(el.textContent)); } catch (e) {}
             }
             const imgs = new Set();
+
+            // Pick the LARGEST candidate from a srcset string like:
+            //   url1 320w, url2 1024w, url3 2048w
+            const pickLargest = (srcset) => {
+                if (!srcset) return null;
+                let best = null, bestW = -1;
+                for (const part of srcset.split(',')) {
+                    const bits = part.trim().split(/\\s+/);
+                    if (!bits[0]) continue;
+                    const w = parseInt((bits[1] || '0').replace(/[^0-9]/g, '')) || 0;
+                    if (w > bestW) { bestW = w; best = bits[0]; }
+                }
+                return best;
+            };
+
             for (const el of document.querySelectorAll('img')) {
-                const src = el.currentSrc || el.src || el.getAttribute('data-src');
-                if (src) imgs.add(src);
+                const cands = [
+                    el.currentSrc, el.src,
+                    el.getAttribute('data-src'),
+                    el.getAttribute('data-original'),
+                    el.getAttribute('data-zoom'),
+                    el.getAttribute('data-large'),
+                    el.getAttribute('data-rf-src'),
+                ];
+                for (const c of cands) if (c) imgs.add(c);
+                const ss = pickLargest(el.getAttribute('srcset') || el.srcset);
+                if (ss) imgs.add(ss);
             }
             for (const el of document.querySelectorAll('source')) {
-                for (const part of (el.srcset || el.src || '').split(',')) {
-                    const u = part.trim().split(' ')[0];
-                    if (u) imgs.add(u);
-                }
+                const ss = pickLargest(el.getAttribute('srcset') || el.srcset);
+                if (ss) imgs.add(ss);
+                if (el.src) imgs.add(el.src);
             }
             for (const m of document.querySelectorAll('meta')) {
                 const prop = (m.getAttribute('property') || m.getAttribute('name') || '').toLowerCase();
@@ -178,6 +208,12 @@ def main():
                     if (c) imgs.add(c);
                 }
             }
+            // Sweep ALL inline <script> JSON for ssl.cdn-redfin URLs —
+            // gallery state often holds these as plain string fields.
+            const html = document.documentElement.innerHTML;
+            const cdnRegex = /https?:\\/\\/(?:ssl\\.cdn-redfin\\.com|photos\\.harstatic\\.com|photos\\.zillowstatic\\.com|rdcpix\\.com)\\/[^"'\\s)<>]+\\.(?:jpg|jpeg|png|webp)/gi;
+            for (const m of html.matchAll(cdnRegex)) imgs.add(m[0]);
+
             return {
                 title: document.title,
                 ogTitle: document.querySelector('meta[property=\"og:title\"]')?.content || '',
@@ -213,6 +249,39 @@ def main():
         if base in seen_bases: continue
         seen_bases.add(base)
         good.append(u)
+
+    # Redfin-specific: when a /bigphoto/ URL exists, sweep its index
+    # for additional full-res photos at the same path. /bigphoto/ is
+    # ~300KB / 1152x768; /bcsphoto/ is ~25KB. Keep the bigphotos AT
+    # THE FRONT of the list (so the hero is photo #1) but retain the
+    # bcsphoto gallery thumbnails as the rest of the carousel.
+    bigphoto_match = re.search(r"/bigphoto/(\d+)/(\d+)_(\d+)\.jpg", " ".join(good))
+    if bigphoto_match:
+        prefix_path, listing_id, _ = bigphoto_match.groups()
+        base = f"https://ssl.cdn-redfin.com/photo/92/bigphoto/{prefix_path}/{listing_id}"
+        bigphotos = []
+        for n in range(0, 40):
+            test = f"{base}_{n}.jpg"
+            try:
+                req = urllib.request.Request(test, headers={"User-Agent": UA, "Referer": "https://www.redfin.com/"})
+                with urllib.request.urlopen(req, timeout=8) as r:
+                    if r.status == 200:
+                        bigphotos.append(test)
+            except urllib.error.HTTPError as e:
+                if e.code == 404: break
+            except Exception:
+                break
+        if bigphotos:
+            print(f"[har] bigphoto sweep found {len(bigphotos)} full-res photos", flush=True)
+            # Drop any bcsphotos so we don't carry low-res duplicates
+            # alongside the high-res hero — bigphotos[0] is the hero;
+            # other gallery URLs (bcsphoto) become carousel slides 2..N
+            # ONLY IF bigphoto doesn't already cover them.
+            new_good = bigphotos[:]
+            for u in good:
+                if "/bigphoto/" not in u:
+                    new_good.append(u)
+            good = new_good
 
     print(f"[har] property-photo URLs: {len(good)}", flush=True)
     saved = []

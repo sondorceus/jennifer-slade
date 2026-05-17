@@ -127,68 +127,13 @@
       ]
     }
   ],
-  "image_total": 81,
-  "har_image_count": 45,
+  "image_total": 86,
+  "har_image_count": 1,
   "saved": [
     {
       "i": 1,
       "url": "https://ssl.cdn-redfin.com/photo/92/bigphoto/434/9165434_0.jpg",
       "bytes": 287582
-    },
-    {
-      "i": 2,
-      "url": "https://ssl.cdn-redfin.com/photo/92/bcsphoto/977/genBcs.3399977_Q.jpg",
-      "bytes": 26746
-    },
-    {
-      "i": 3,
-      "url": "https://ssl.cdn-redfin.com/photo/92/bcsphoto/565/genBcs.8568565_D.jpg",
-      "bytes": 30956
-    },
-    {
-      "i": 4,
-      "url": "https://ssl.cdn-redfin.com/photo/92/bcsphoto/221/genBcs.6500221_5.jpg",
-      "bytes": 25696
-    },
-    {
-      "i": 5,
-      "url": "https://ssl.cdn-redfin.com/photo/92/bcsphoto/275/genBcs.2546275_F.jpg",
-      "bytes": 33711
-    },
-    {
-      "i": 6,
-      "url": "https://ssl.cdn-redfin.com/photo/92/bcsphoto/523/genBcs.4345523_S.jpg",
-      "bytes": 44075
-    },
-    {
-      "i": 7,
-      "url": "https://ssl.cdn-redfin.com/photo/92/bcsphoto/888/genBcs.8414888_9.jpg",
-      "bytes": 34509
-    },
-    {
-      "i": 8,
-      "url": "https://ssl.cdn-redfin.com/photo/92/mbphoto/742/genMid.8300742_0.jpg",
-      "bytes": 50759
-    },
-    {
-      "i": 9,
-      "url": "https://ssl.cdn-redfin.com/photo/92/mbphoto/742/genMid.8300742_1_0.jpg",
-      "bytes": 44143
-    },
-    {
-      "i": 10,
-      "url": "https://ssl.cdn-redfin.com/photo/92/mbphoto/742/genMid.8300742_39_0.jpg",
-      "bytes": 47486
-    },
-    {
-      "i": 11,
-      "url": "https://ssl.cdn-redfin.com/photo/92/mbphoto/588/genMid.7239588_0.jpg",
-      "bytes": 51777
-    },
-    {
-      "i": 12,
-      "url": "https://ssl.cdn-redfin.com/photo/92/mbphoto/588/genMid.7239588_1_0.jpg",
-      "bytes": 47815
     }
   ]
 }
