@@ -33,7 +33,8 @@ type Featured = {
 // Ordered DSC-then-DJI so the gallery tells the story: facade →
 // rooms → landscape → aerial closers.
 const HONEY_CREEK_PHOTOS = Array.from({ length: 50 }, (_, i) => `/listings/honey-creek-${i + 1}.jpg`);
-const WESTHILL_PHOTOS = Array.from({ length: 12 }, (_, i) => `/listings/westhill-${i + 1}.jpg`);
+const WESTHILL_PHOTOS   = Array.from({ length: 12 }, (_, i) => `/listings/westhill-${i + 1}.jpg`);
+const CANYONWOOD_PHOTOS = Array.from({ length: 5 },  (_, i) => `/listings/canyonwood-${i + 1}.jpg`);
 
 const FEATURED: Featured[] = [
   {
@@ -69,6 +70,18 @@ const FEATURED: Featured[] = [
     regionLabel: "Dripping Springs, TX",
     meta: "Verified Homes.com closing record",
     desc: "Multi-million dollar Dripping Springs closing — representative of Jennifer's track record on hill-country acreage and architectural-luxury transactions.",
+  },
+  {
+    id: "canyonwood-dripping",
+    status: "Recently Sold",
+    title: "201 N Canyonwood Dr, Dripping Springs",
+    price: "Sold · Multi-million",
+    area: "Dripping Springs · 78620",
+    regionLabel: "Dripping Springs, TX 78620",
+    beds: 8, baths: 6, sqft: 5422, acres: 2,
+    meta: "MLS 6012922 · Texas Hill Country resort estate",
+    desc: "Resort-style hill country estate on two private acres — main residence, guest wings, and outbuildings totaling approximately 9,000 sqft of conditioned space. Stone-and-metal hill-country vernacular with sunset views, multi-bay garage, smart-home infrastructure, sauna, and gallery-grade interior finishes.",
+    images: CANYONWOOD_PHOTOS,
   },
   {
     id: "miss-kitty-horseshoe",
