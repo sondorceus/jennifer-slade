@@ -46,26 +46,30 @@ export default function ListingsBrowser({ listings }: Props) {
 
   return (
     <div className="space-y-16 lg:space-y-24">
-      {/* Region filter pills */}
-      <div className="flex flex-wrap items-center gap-2 lg:gap-3 -mb-4">
-        <p className="eyebrow text-[#8d6f4f] mr-3">Region</p>
-        {regions.map((r) => {
-          const active = r === region;
-          return (
-            <button
-              key={r}
-              type="button"
-              onClick={() => setRegion(r)}
-              className={`px-4 py-1.5 rounded-full text-[11px] tracking-[0.2em] uppercase font-medium border transition-colors ${
-                active
-                  ? "bg-[#1a1716] text-[#faf6f0] border-[#1a1716]"
-                  : "bg-transparent text-[#1a1716]/75 border-[#1a1716]/30 hover:border-[#1a1716] hover:text-[#1a1716]"
-              }`}
-            >
-              {r}
-            </button>
-          );
-        })}
+      {/* Region filter — mobile-safe layout: dedicated row, eyebrow on
+          its own line on small screens, pills can wrap freely without
+          crashing into the next section. */}
+      <div className="pb-2">
+        <p className="eyebrow text-[#8d6f4f] mb-3">Region</p>
+        <div className="flex flex-wrap items-center gap-2 lg:gap-3">
+          {regions.map((r) => {
+            const active = r === region;
+            return (
+              <button
+                key={r}
+                type="button"
+                onClick={() => setRegion(r)}
+                className={`px-4 py-1.5 rounded-full text-[11px] tracking-[0.2em] uppercase font-medium border transition-colors ${
+                  active
+                    ? "bg-[#1a1716] text-[#faf6f0] border-[#1a1716]"
+                    : "bg-transparent text-[#1a1716]/75 border-[#1a1716]/30 hover:border-[#1a1716] hover:text-[#1a1716]"
+                }`}
+              >
+                {r}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Status sections — each shows the filtered listings in that bucket */}

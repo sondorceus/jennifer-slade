@@ -62,15 +62,22 @@ export default function Footer() {
             <p className="font-serif text-3xl lg:text-4xl tracking-tight leading-tight">
               Jennifer <em className="italic font-normal">Slade</em>
             </p>
-            {/* Brokerage chain — must be ≥50% of agent-name size for TREC
-                compliance. Using xl/2xl serif satisfies that against
-                the 3xl-4xl agent name above. */}
-            <p className="font-serif text-xl lg:text-2xl text-[#c9a877] mt-4 tracking-tight">
-              {BROKER_INFO.agencyName}
-            </p>
-            <p className="text-[12px] tracking-[0.16em] uppercase text-[#faf6f0]/55 mt-2">
-              Sponsored by {BROKER_INFO.sponsoringBroker}
-            </p>
+            {/* Brokerage lockup — official Rundog wordmark + sponsor chain.
+                Logo is inverted to white-on-dark via CSS so we don't need
+                to host a separate light variant. Size is ~50% of the
+                Jennifer Slade serif name above, satisfying the TREC
+                proportionality rule. */}
+            <div className="mt-6">
+              <img
+                src="/rundog-logo.png"
+                alt={BROKER_INFO.agencyName}
+                className="h-12 lg:h-14 w-auto"
+                style={{ filter: "invert(1) brightness(1.05)" }}
+              />
+              <p className="text-[11px] tracking-[0.18em] uppercase text-[#faf6f0]/55 mt-3">
+                Sponsored by {BROKER_INFO.sponsoringBroker}
+              </p>
+            </div>
             <p className="editorial text-base lg:text-lg text-[#faf6f0]/70 mt-6 max-w-md leading-relaxed">
               Quiet, deliberate representation for buyers and sellers in Westlake, Tarrytown, Lakeway, Lake Austin, Barton Creek, and the Dripping Springs hill country.
             </p>

@@ -42,8 +42,21 @@ export default function Nav() {
         }`}
       >
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 flex items-center justify-between">
-          <Link href="/" className="font-serif text-[20px] lg:text-[22px] tracking-tight text-[#1a1716] leading-none">
-            Jennifer <em className="italic font-normal">Slade</em>
+          <Link href="/" className="flex items-center gap-3 group">
+            <span className="font-serif text-[20px] lg:text-[22px] tracking-tight text-[#1a1716] leading-none">
+              Jennifer <em className="italic font-normal">Slade</em>
+            </span>
+            {/* Broker-chain disclosure in header — small Rundog wordmark
+                satisfies TREC visibility, but the agent name leads. Hidden
+                on the narrowest mobile to preserve the hamburger spacing.
+                Stays in the dark (un-inverted) since header is light. */}
+            <span className="hidden sm:flex items-center gap-2 pl-3 border-l border-[#1a1716]/15">
+              <img
+                src="/rundog-logo.png"
+                alt="Rundog Real Estate Group"
+                className="h-6 lg:h-7 w-auto opacity-80 group-hover:opacity-100 transition-opacity"
+              />
+            </span>
           </Link>
 
           {/* Desktop nav */}
@@ -79,8 +92,15 @@ export default function Nav() {
       {open && (
         <div className="fixed inset-0 z-[80] bg-[#faf6f0] overflow-y-auto">
           <div className="px-6 py-5 flex items-center justify-between border-b border-[#1a1716]/10">
-            <Link href="/" onClick={() => setOpen(false)} className="font-serif text-xl text-[#1a1716]">
-              Jennifer <em>Slade</em>
+            <Link href="/" onClick={() => setOpen(false)} className="flex items-center gap-3">
+              <span className="font-serif text-xl text-[#1a1716]">
+                Jennifer <em>Slade</em>
+              </span>
+              <img
+                src="/rundog-logo.png"
+                alt="Rundog Real Estate Group"
+                className="h-6 w-auto opacity-80 border-l border-[#1a1716]/15 pl-3"
+              />
             </Link>
             <button onClick={() => setOpen(false)} className="p-2 -mr-2" aria-label="Close menu">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a1716" strokeWidth="1.5"><path d="M6 6L18 18M18 6L6 18" /></svg>
